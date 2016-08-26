@@ -70,7 +70,7 @@ Returns:
 	mask1d = double(mask.img(:));
 	tmp = and(tmp, (mask1d ~= 0));
 	X = X(tmp, :);
-	mymask = reshape(tmp, size(mask.img));
+	final_mask = reshape(tmp, size(mask.img));
 
 	cd(cur_path);
 end
