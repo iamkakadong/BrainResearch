@@ -59,7 +59,7 @@ Returns:
 
 	% load mask to select voxels
 	idx(isnan(idx)) = 0;
-	tmp = any(idx~=0, 2);
+	tmp = all(idx~=0, 2);
 	if (mask_type == 0)	% basic configuration. gray and white matter
 		mask = load_untouch_nii('mask.img');
 	elseif (mask_type == 1)	% only white matter
@@ -68,7 +68,7 @@ Returns:
 		mask = load('/home/tren/masks/almost_ridge.mat');
 	end
 	mask1d = double(mask.img(:));
-	tmp = or(tmp, (mask1d ~= 0));
+	tmp = and(tmp, (mask1d ~= 0));
 	X = X(tmp, :);
 	final_mask = reshape(tmp, size(mask.img));
 
