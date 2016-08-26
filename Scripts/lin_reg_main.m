@@ -19,10 +19,10 @@ end
 fprintf('finished normalization\n')
 
 fprintf('partitioning into training and testing set...\n')
-X_train = X(1:subject_range(1), :);
-X_test = X(subject_range(1) + 1 : end, :);
-y_train = y(1:subject_range(1), :);
-y_test = y(subject_range(1) + 1 : end, :);
+X_train = X(subject_range(1) + 1 : end, :);
+X_test = X(1:subject_range(1), :);
+y_train = y(subject_range(1) + 1 : end, :);
+y_test = y(1:subject_range(1), :);
 fprintf('finished partition\n')
 
 fprintf('training...\n')

@@ -68,7 +68,7 @@ Returns:
 		mask = load('/home/tren/masks/almost_ridge.mat');
 	end
 	mask1d = double(mask.img(:));
-	tmp = and(tmp, (mask1d ~= 0));
+	tmp = or(tmp, (mask1d ~= 0));
 	X = X(tmp, :);
 	final_mask = reshape(tmp, size(mask.img));
 
