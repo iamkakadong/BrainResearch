@@ -1,4 +1,4 @@
-function [b] = lin_reg_train(X, y)
+function [b] = lin_reg_train(X, y, ~)
 	% X should be n * p
 	% y should be n * 1
 	[nx, px] = size(X);

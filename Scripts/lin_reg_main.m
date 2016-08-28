@@ -19,22 +19,29 @@ for i = 1:length(subject_idx)
 end
 fprintf('finished normalization\n')
 
-fprintf('partitioning into training and testing set...\n')
-X_train = X(subject_range(1) + 1 : end, :);
-X_test = X(1:subject_range(1), :);
-y_train = y(subject_range(1) + 1 : end, :);
-y_test = y(1:subject_range(1), :);
-fprintf('finished partition\n')
+fprintf('performing cross-validation...\n')
+data = struct;
+data.X = X;
+data.y = y;
+cv_results = cross_validate(data, subject_range, @lin_reg_train, @lin_reg_pred, {}, @r2);
+fprintf('finished cross-validation\n');
 
-fprintf('training...\n')
-b = lin_reg_train(X_train, y_train);
-fprintf('finished training\n')
+% fprintf('partitioning into training and testing set...\n')
+% X_train = X(subject_range(1) + 1 : end, :);
+% X_test = X(1:subject_range(1), :);
+% y_train = y(subject_range(1) + 1 : end, :);
+% y_test = y(1:subject_range(1), :);
+% fprintf('finished partition\n')
 
-fprintf('predicting on test set...\n')
-pred = lin_reg_pred(X_test, b);
-fprintf('finished predicting\n')
+% fprintf('training...\n')
+% b = lin_reg_train(X_train, y_train);
+% fprintf('finished training\n')
 
-fprintf('evaluating r-sqaure\n')
-rsqr = r2(y_test, pred);
+% fprintf('predicting on test set...\n')
+% pred = lin_reg_pred(X_test, b);
+% fprintf('finished predicting\n')
 
-fprintf('r_square = %0.3f\n', rsqr);
+% fprintf('evaluating r-sqaure\n')
+% rsqr = r2(y_test, pred);
+
+% fprintf('r_square = %0.3f\n', rsqr);
