@@ -23,7 +23,7 @@ fprintf('performing cross-validation...\n')
 data = struct;
 data.X = X;
 data.y = y;
-cv_results = cross_validate(data, subject_range, @lin_reg_train, @lin_reg_pred, {}, @r2);
+cv_results = cross_validate(data, subject_range, @lin_reg_train, @lin_reg_pred, {}, @my_r2);
 fprintf('finished cross-validation\n');
 
 % fprintf('partitioning into training and testing set...\n')
@@ -42,6 +42,6 @@ fprintf('finished cross-validation\n');
 % fprintf('finished predicting\n')
 
 % fprintf('evaluating r-sqaure\n')
-% rsqr = r2(y_test, pred);
+% rsqr = my_r2(y_test, pred);
 
 % fprintf('r_square = %0.3f\n', rsqr);

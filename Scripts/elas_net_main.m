@@ -24,7 +24,7 @@ param = struct;
 param.alpha = 0.9;
 param.DFmax = 1000;
 param.cv_num = 10;
-matlabpool(2);
+matlabpool(1);
 opts = statset('UseParallel', true);
 param.opts = opts;
 
