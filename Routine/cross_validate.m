@@ -47,7 +47,7 @@ for i = 1 : n_parameters
 		res.param = parameters;
 		
 		cv_result{i, j} = res;
-		fprintf('subject %d has score %0.3d under configuartion %d', [j, score, i]);
+		fprintf('subject %d has score %0.3d under configuartion %d\n', [j, score, i]);
 	end
 end
 
