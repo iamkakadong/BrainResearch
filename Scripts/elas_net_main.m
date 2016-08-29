@@ -30,7 +30,9 @@ param.opts = opts;
 
 try
 	fprintf('training elastic net...\n')
+	tic;
 	[b, fitinfo] = elas_net_train(X, y, param);
+	toc
 	fprintf('finished training elastic net\n')
 catch
 	matlabpool close;
