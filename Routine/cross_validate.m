@@ -22,6 +22,7 @@ cv_result = cell(n_parameters, n_subjects);
 
 for i = 1 : n_parameters
 	for j = 1 : n_subjects
+		fprintf('cross-validating subject %d with parameter set #%d... \n', [j,i]);
 		if (j == 1) 
 			idx_range = (subject_range(j) + 1) : subject_range(n_subjects); 
 			cv_idx_range = 1 : subject_range(j);
@@ -46,6 +47,7 @@ for i = 1 : n_parameters
 		res.param = parameters;
 		
 		cv_result{i, j} = res;
+		fprintf('subject %d has score %0.3d under configuartion %d', [j, score, i]);
 	end
 end
 
