@@ -28,7 +28,12 @@ matlabpool;
 opts = statset('UseParallel', true);
 param.opts = opts;
 
-fprintf('training elastic net...\n')
-[b, fitinfo] = elas_net_train(X, y, param);
-fprintf('finished training elastic net\n')
+try
+	fprintf('training elastic net...\n')
+	[b, fitinfo] = elas_net_train(X, y, param);
+	fprintf('finished training elastic net\n')
+catch
+	matlabpool close;
+end
+	
 matlabpool close;
