@@ -15,7 +15,7 @@ fprintf('finished loading data\n')
 ym = zeros(length(subject_range), 1);
 ys = zeros(length(subject_range), 1);
 ym(1) = mean(y(1 : subject_range(1)));
-ys(1 = std(y(1 : subject_range(1)));
+ys(1) = std(y(1 : subject_range(1)));
 for i = 2 : length(subject_range)
 	ym(i) = mean(y(subject_range(i - 1) + 1 : subject_range(i)));
 	ys(i) = std(y(subject_range(i - 1) + 1 : subject_range(i)));
