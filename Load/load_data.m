@@ -61,7 +61,7 @@ Returns:
 	idx(isnan(idx)) = 0;
 	tmp = all(idx~=0, 2);
 	if (mask_type == 0)	% basic configuration. gray and white matter
-		mask = load_untouch_nii(strcat(tmp_path, '/mask.img');
+		mask = load_untouch_nii(strcat(tmp_path, '/mask.img'));
 	elseif (mask_type == 1)	% only white matter
 		mask = load_untouch_nii('/data/ARL/ROIs/resliced_MNI-maxprob-thr25-2mm_binary.nii');
 	elseif (mask_type == 2)	% almost_ridge mask
