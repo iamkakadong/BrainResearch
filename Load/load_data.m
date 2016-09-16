@@ -43,13 +43,13 @@ Returns:
 	% load data for subjects in subject_idx
 	for j = 1 : length(subject_idx)
 		tmp_path = strcat('/data/ARL/', num2str(subject_idx(j), '%04d'), '/snStroop_singletrial_GLM');
-		cd(tmp_path);
+		% cd(tmp_path);
 		% load reaction time for this subject
 		this_rt = subs_rt(find(subs_idx == subject_idx(j)));
 		this_rt = this_rt{1,1};
 		subject_range(j + 1) = subject_range(j) + length(this_rt);
 		% load SPM to record experiment type
-		event_types = [event_types, load_event('SPM.mat')];
+		event_types = [event_types, load_event(strcat(tmp_path, '/SPM.mat'))];
 		% load brain image and response time
 		[X, y] = load_xy(X, y, this_rt);
 		% index matrix for masking non-zero entries
@@ -61,7 +61,7 @@ Returns:
 	idx(isnan(idx)) = 0;
 	tmp = all(idx~=0, 2);
 	if (mask_type == 0)	% basic configuration. gray and white matter
-		mask = load_untouch_nii('mask.img');
+		mask = load_untouch_nii(strcat(tmp_path, '/mask.img');
 	elseif (mask_type == 1)	% only white matter
 		mask = load_untouch_nii('/data/ARL/ROIs/resliced_MNI-maxprob-thr25-2mm_binary.nii');
 	elseif (mask_type == 2)	% almost_ridge mask
@@ -72,7 +72,7 @@ Returns:
 	X = X(tmp, :);
 	final_mask = reshape(tmp, size(mask.img));
 
-	cd(cur_path);
+	% cd(cur_path);
 end
 
 function [event] = load_event(filename)
