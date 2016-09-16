@@ -24,9 +24,9 @@ end
 % validate that features have similar distribution across subjects
 xm = zeros(length(X), length(subject_range));
 xs = zeros(length(X), length(subject_range));
-xm(:, 1) = mean(X(1 : subject_range(1), :), 2)';
-xs(:, 1) = std(X(1 : subject_range(1), :), 2)';
+xm(:, 1) = mean(X(1 : subject_range(1), :), 1)';
+xs(:, 1) = std(X(1 : subject_range(1), :), 1)';
 for i = 2 : length(subject_range)
-	xm(:, i) = mean(X(subject_range(i - 1) + 1 : subject_range(i), :), 2)';
-	xs(:, 1) = std(X(subject_range(i - 1) + 1 : subject_range(i), :), 2)';
+	xm(:, i) = mean(X(subject_range(i - 1) + 1 : subject_range(i), :), 1)';
+	xs(:, i) = std(X(subject_range(i - 1) + 1 : subject_range(i), :), 1)';
 end
