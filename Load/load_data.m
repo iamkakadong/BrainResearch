@@ -105,6 +105,6 @@ function [X, y] = load_xy(X, y, thisRT)
 		img1d = img.img(:);
 		subject_data = [subject_data, img1d];
 	end
-	X = [X, normalize(subject_data')'];
+	X = [X, normalize_feature(subject_data')'];
 end
 

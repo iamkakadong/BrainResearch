@@ -14,7 +14,7 @@ fprintf('finished loading data\n')
 fprintf('normalizing data...\n')
 last_idx = 0;
 for i = 1:length(subject_idx)
-	y(last_idx + 1 : subject_range(i)) = normalize(y(last_idx + 1 : subject_range(i)));
+	y(last_idx + 1 : subject_range(i)) = normalize_feature(y(last_idx + 1 : subject_range(i)));
 	last_idx = subject_range(i);
 end
 X = normalize(X);
