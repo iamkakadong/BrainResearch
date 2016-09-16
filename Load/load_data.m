@@ -51,7 +51,7 @@ Returns:
 		% load SPM to record experiment type
 		event_types = [event_types, load_event(strcat(tmp_path, '/SPM.mat'))];
 		% load brain image and response time
-		[X, y] = load_xy(X, y, this_rt);
+		[X, y] = load_xy(X, y, this_rt, tmp_path);
 		% index matrix for masking non-zero entries
 		idx = [idx, X(:, subject_range(j + 1))];
 	end
@@ -95,13 +95,13 @@ function [event] = load_event(filename)
 	end
 end
 
-function [X, y] = load_xy(X, y, thisRT)
+function [X, y] = load_xy(X, y, thisRT, parent_path)
 	subject_data = [];
 	y = [y, thisRT];
 	for i = 1:length(thisRT)
 		imgpath = ['beta_', num2str(i, '%04d'), '.img'];
 		% load brain image
-		img = load_untouch_nii(imgpath);
+		img = load_untouch_nii(strcat(parent_path, imgpath));
 		img1d = img.img(:);
 		subject_data = [subject_data, img1d];
 	end
