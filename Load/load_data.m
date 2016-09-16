@@ -99,7 +99,7 @@ function [X, y] = load_xy(X, y, thisRT, parent_path)
 	subject_data = [];
 	y = [y, thisRT];
 	for i = 1:length(thisRT)
-		imgpath = ['beta_', num2str(i, '%04d'), '.img'];
+		imgpath = ['/beta_', num2str(i, '%04d'), '.img'];
 		% load brain image
 		img = load_untouch_nii(strcat(parent_path, imgpath));
 		img1d = img.img(:);
