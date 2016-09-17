@@ -17,7 +17,6 @@ for i = 1:length(subject_idx)
 	y(last_idx + 1 : subject_range(i)) = normalize_feature(y(last_idx + 1 : subject_range(i)));
 	last_idx = subject_range(i);
 end
-X = normalize(X);
 fprintf('finished normalization\n')
 
 param = struct;
