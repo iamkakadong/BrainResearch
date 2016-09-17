@@ -21,19 +21,24 @@ X = normalize(X);
 fprintf('finished normalization\n')
 
 param = struct;
-param.alpha = 0.9;
-param.DFmax = 1000;
+% param.alpha = 0.9;
+% param.DFmax = 1000;
 param.cv_num = 10;
 matlabpool(1);
 opts = statset('UseParallel', true);
 param.opts = opts;
+param = {param};
+
+data = struct;
+data.X = X;
+data.y = y;
 
 try
-	fprintf('training elastic net...\n')
+	fprintf('Performing cross-validation...\n')
 	tic;
-	[b, fitinfo] = lasso_train(X, y, param);
+	cv_result = cross_validate(data, subject_range, @lasso_train, @lasso_pred, param, @my_r2);
 	toc
-	fprintf('finished training elastic net\n')
+	fprintf('finished cross-validation\n')
 catch
 	matlabpool close;
 end
