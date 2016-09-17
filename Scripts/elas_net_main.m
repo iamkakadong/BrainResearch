@@ -19,6 +19,12 @@ for i = 1:length(subject_idx)
 end
 fprintf('finished normalization\n')
 
+l_alpha = [0.1, 0.3, 0.6, 0.9];
+DFmax = 1000;
+cv_num = 10;
+
+for i = 
+
 param = struct;
 param.alpha = 0.9;
 param.DFmax = 1000;
@@ -27,12 +33,16 @@ matlabpool(1);
 opts = statset('UseParallel', true);
 param.opts = opts;
 
+data = struct;
+data.X = X;
+data.y = y;
+
 try
-	fprintf('training elastic net...\n')
+	fprintf('evaluating elastic net...\n')
 	tic;
-	[b, fitinfo] = elas_net_train(X, y, param);
+	cv_result = cross_validate(data, subject_range, @elas_net_train, @elas_net_pred, param, @my_r2);
 	toc
-	fprintf('finished training elastic net\n')
+	fprintf('finished evaluating elastic net\n')
 catch
 	matlabpool close;
 end

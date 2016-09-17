@@ -33,11 +33,11 @@ data.X = X;
 data.y = y;
 
 try
-	fprintf('Performing cross-validation...\n')
+	fprintf('Evaluating lasso...\n')
 	tic;
 	cv_result = cross_validate(data, subject_range, @lasso_train, @lasso_pred, param, @my_r2);
 	toc
-	fprintf('finished cross-validation\n')
+	fprintf('finished evaluating lasso\n')
 catch
 	matlabpool close;
 end

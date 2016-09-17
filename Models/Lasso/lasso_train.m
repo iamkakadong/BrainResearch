@@ -1,4 +1,4 @@
-function [b] = lasso_train(X, y, param)
+function [b] = lasso_train(X, y, params)
 	% X should be n * p
 	% y should be n * 1
 	[nx, px] = size(X);
