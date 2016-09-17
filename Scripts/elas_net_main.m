@@ -23,15 +23,30 @@ l_alpha = [0.1, 0.3, 0.6, 0.9];
 DFmax = 1000;
 cv_num = 10;
 
-for i = 
+params = cell(numel(l_alpha) * numel(DFmax) * numel(cv_num));
 
-param = struct;
-param.alpha = 0.9;
-param.DFmax = 1000;
-param.cv_num = 10;
-matlabpool(1);
-opts = statset('UseParallel', true);
-param.opts = opts;
+idx = 1;
+for i = 1 : numel(l_alpha)
+	for j = 1 : numel(DFmax)
+		for k = 1 : numel(cv_num)
+			param = struct;
+			param.alpha = l_alpha(i);
+			param.DFmax = DFmax(j);
+			param.cv_num = cv_num(k);
+			opts = statset('UseParallel', true);
+			params{idx} = param;
+			idx = idx + 1;
+		end
+	end
+end
+
+% param = struct;
+% param.alpha = 0.9;
+% param.DFmax = 1000;
+% param.cv_num = 10;
+% matlabpool(1);
+% opts = statset('UseParallel', true);
+% param.opts = opts;
 
 data = struct;
 data.X = X;
@@ -40,7 +55,7 @@ data.y = y;
 try
 	fprintf('evaluating elastic net...\n')
 	tic;
-	cv_result = cross_validate(data, subject_range, @elas_net_train, @elas_net_pred, param, @my_r2);
+	cv_result = cross_validate(data, subject_range, @elas_net_train, @elas_net_pred, params, @my_r2);
 	toc
 	fprintf('finished evaluating elastic net\n')
 catch
