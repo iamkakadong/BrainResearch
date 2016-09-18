@@ -53,7 +53,7 @@ for i = 1 : n_parameters
 end
 
 catch
-	return cv_result;
+	return
 end
 
 end
