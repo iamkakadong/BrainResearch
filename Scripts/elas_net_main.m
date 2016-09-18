@@ -35,6 +35,7 @@ for i = 1 : numel(l_alpha)
 			param.DFmax = DFmax(j);
 			param.cv_num = cv_num(k);
 			opts = statset('UseParallel', true);
+			param.opts = opts;
 			params{idx} = param;
 			idx = idx + 1;
 		end
