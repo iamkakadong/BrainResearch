@@ -19,12 +19,13 @@ for i = 1:length(subject_idx)
 end
 fprintf('finished normalization\n')
 
-l_alpha = [0.1, 0.3, 0.6, 0.9];
+l_alpha = [0.9, 0.6, 0.3, 0.1];
 DFmax = 1000;
 cv_num = 10;
 
 params = cell(numel(l_alpha) * numel(DFmax) * numel(cv_num));
 
+matlabpool(2);
 idx = 1;
 for i = 1 : numel(l_alpha)
 	for j = 1 : numel(DFmax)

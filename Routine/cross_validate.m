@@ -9,6 +9,7 @@ function [ cv_result ] = cross_validate( data, subject_range, trainer, predictor
 %	parameters contains configurations of parameter needed by trainer
 %	evaluator is used to evaluate the prediction for each round of cross-validation
 
+try
 n_subjects = length(subject_range);
 n_parameters = length(parameters);
 
@@ -49,6 +50,10 @@ for i = 1 : n_parameters
 		cv_result{i, j} = res;
 		fprintf('subject %d has score %0.3d under configuartion %d\n', [j, score, i]);
 	end
+end
+
+catch
+	return cv_result;
 end
 
 end
