@@ -52,7 +52,8 @@ for i = 1 : n_parameters
 	end
 end
 
-catch
+catch ME
+	rethrow(ME)
 	return
 end
 
