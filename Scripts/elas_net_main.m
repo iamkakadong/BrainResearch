@@ -60,7 +60,8 @@ try
 	cv_result = cross_validate(data, subject_range, @elas_net_train, @elas_net_pred, params, @my_r2);
 	toc
 	fprintf('finished evaluating elastic net\n')
-catch
+catch ME
+	rethrow(ME);
 	matlabpool close;
 end
 	

@@ -53,7 +53,7 @@ for i = 1 : n_parameters
 end
 
 catch ME
-	rethrow(ME)
+	rethrow(ME);
 	return
 end
 
