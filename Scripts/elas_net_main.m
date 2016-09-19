@@ -62,7 +62,7 @@ try
 	fprintf('finished evaluating elastic net\n')
 catch ME
 	rethrow(ME);
-	matlabpool close;
+	% matlabpool close;
 end
 	
-matlabpool close;
+% matlabpool close;
