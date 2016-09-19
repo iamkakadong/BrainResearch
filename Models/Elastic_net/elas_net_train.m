@@ -6,6 +6,6 @@ function [b, fitinfo] = elas_net_train(X, y, params)
 	assert(nx == ny, 'invalid input: number of observations does not match.');
 
 	[b, fitinfo] = lasso(X, y, 'Alpha', params.alpha, 'Standardize', true, ...
-		'DFmax', params.DFmax, 'CV', params.cv_num, 'Options', params.opts);
+		'DFmax', params.DFmax, 'CV', params.cv_num);
 	b = b(:, fitinfo.IndexMinMSE);
 end
