@@ -6,6 +6,6 @@ function [b] = lasso_train(X, y, params)
 	assert(nx == ny, 'invalid input: number of observations does not match.');
 	
 	[b, fitinfo] = lasso(X, y, 'Standardize', true, ...
-		'CV', params.cv_num, 'Options', params.opts);
+		'CV', params.cv_num, 'Options');
 	b = b(:, fitinfo.IndexMinMSE);
 end

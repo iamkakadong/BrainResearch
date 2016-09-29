@@ -1,6 +1,7 @@
 function [X, y, event_types, subject_range, final_mask] = load_data(subject_idx, mask_type)
 %{
-  load data from files. 
+  load data from files. X is already normalzied by each subject, i.e. the features of each
+  subject's response has mean 0 and variance 1.
 Inputs:
 	subject_idx: indicates the subjects that are going to be loaded
 	mask_type: which type of mask to be used (default to gray & white matter mask)
