@@ -23,7 +23,7 @@ l_alpha = [0.9, 0.6, 0.3, 0.1];
 DFmax = 1000;
 cv_num = 10;
 
-params = cell(numel(l_alpha) * numel(DFmax) * numel(cv_num));
+params = cell(numel(l_alpha) * numel(DFmax) * numel(cv_num), 1);
 
 % matlabpool(2);
 idx = 1;
