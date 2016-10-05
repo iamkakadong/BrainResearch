@@ -1,6 +1,6 @@
 clear all
 
-addpath(genpath('../../Toolbox'));
+addpath(genpath('../../BrainResearch'));
 load_outside_functions;
 
 subject_idx = [151 152 153 158 159 160 171 173 175 176 187 188 189 177 12 13 6 181 182 183 184 186 190 191 192 193 194 196];
@@ -25,7 +25,7 @@ cv_num = 10;
 
 params = cell(numel(l_alpha) * numel(DFmax) * numel(cv_num), 1);
 
-% matlabpool(2);
+matlabpool(4);
 idx = 1;
 for i = 1 : numel(l_alpha)
 	for j = 1 : numel(DFmax)
@@ -34,8 +34,8 @@ for i = 1 : numel(l_alpha)
 			param.alpha = l_alpha(i);
 			param.DFmax = DFmax(j);
 			param.cv_num = cv_num(k);
-			% opts = statset('UseParallel', true);
-			% param.opts = opts;
+			opts = statset('UseParallel', 'always');
+			param.opts = opts;
 			params{idx} = param;
 			idx = idx + 1;
 		end
@@ -62,7 +62,9 @@ try
 	fprintf('finished evaluating elastic net\n')
 catch ME
 	rethrow(ME);
-	% matlabpool close;
+	matlabpool close;
 end
 	
-% matlabpool close;
+save('../Results/elas_net.mat', 'cv_result');
+
+matlabpool close;
