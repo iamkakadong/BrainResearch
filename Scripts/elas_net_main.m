@@ -1,4 +1,11 @@
-clear all
+% clear all
+
+if (~exist subset)
+	subset = [];
+elseif (length(subset) ~= 2)
+	fprintf('Incorrect subset size');
+	break
+end
 
 addpath(genpath('../../BrainResearch'));
 load_outside_functions;
@@ -42,14 +49,6 @@ for i = 1 : numel(l_alpha)
 	end
 end
 
-% param = struct;
-% param.alpha = 0.9;
-% param.DFmax = 1000;
-% param.cv_num = 10;
-% matlabpool(1);
-% opts = statset('UseParallel', true);
-% param.opts = opts;
-
 data = struct;
 data.X = X;
 data.y = y;
@@ -57,14 +56,19 @@ data.y = y;
 try
 	fprintf('evaluating elastic net...\n')
 	tic;
-	cv_result = cross_validate(data, subject_range, @elas_net_train, @elas_net_pred, params, @my_r2);
+	cv_result = cross_validate(data, subject_range, @elas_net_train, @elas_net_pred, params, @my_r2, subset);
 	toc
 	fprintf('finished evaluating elastic net\n')
 catch ME
 	rethrow(ME);
 	matlabpool close;
 end
-	
-save('../Results/elas_net.mat', 'cv_result');
+
+if (length(subset) == 0)
+	filename = '../Results/elas_net_all.mat';
+else
+	filename = strcat('../Results/elas_net', num2str(subset(1)), '_to_', num2str(subset(2)), '.mat');
+end
+save(filename, 'cv_result');
 
 matlabpool close;

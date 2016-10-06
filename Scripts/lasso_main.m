@@ -19,8 +19,11 @@ for i = 1:length(subject_idx)
 end
 fprintf('finished normalization\n')
 
+matlabpool(4);
 param = struct;
 param.cv_num = 10;
+opts = statset('UseParallel', 'always');
+param.opts = opts;
 param = {param};
 
 data = struct;

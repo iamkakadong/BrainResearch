@@ -1,1 +1,1 @@
-addpath('/home/tren/OldData/NIFTI_20110310');
+addpath('/data2/tren/OldData/NIFTI_20110310');

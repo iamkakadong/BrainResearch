@@ -1,4 +1,4 @@
-function [ cv_result ] = cross_validate( data, subject_range, trainer, predictor, parameters, evaluator )
+function [ cv_result ] = cross_validate( data, subject_range, trainer, predictor, parameters, evaluator, subset )
 %CROSS_VALIDATE Summary of this function goes here
 %   Detailed explanation goes here:
 
@@ -12,6 +12,13 @@ function [ cv_result ] = cross_validate( data, subject_range, trainer, predictor
 try
 n_subjects = length(subject_range);
 n_parameters = length(parameters);
+if (length(subset) == 0)
+	beg_sub = 1;
+	end_sub = n_subjects;
+else
+	beg_sub = subset(1);
+	end_sub = subset(2);
+end
 
 if (n_parameters == 0)
 	parameters = cell(1);
@@ -22,7 +29,7 @@ end
 cv_result = cell(n_parameters, n_subjects);
 
 for i = 1 : n_parameters
-	for j = 1 : n_subjects
+	for j = beg_sub : end_sub
 		fprintf('cross-validating subject %d with parameter set #%d... \n', [j,i]);
 		if (j == 1) 
 			idx_range = (subject_range(j) + 1) : subject_range(n_subjects); 
