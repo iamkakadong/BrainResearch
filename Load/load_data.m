@@ -43,7 +43,7 @@ Returns:
 
 	% load data for subjects in subject_idx
 	for j = 1 : length(subject_idx)
-		fprintf('loading data for subject %d', subject_idx(j));
+		fprintf('loading data for subject %d \n', subject_idx(j));
 		tmp_path = strcat('/data2/tren/OldData/', num2str(subject_idx(j), '%04d'), '/snStroop_singletrial_GLM');
 		% cd(tmp_path);
 		% load reaction time for this subject
