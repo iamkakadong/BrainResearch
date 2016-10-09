@@ -26,13 +26,14 @@ for i = 1:length(subject_idx)
 end
 fprintf('finished normalization\n')
 
-l_alpha = [0.9, 0.6, 0.3, 0.1];
+%l_alpha = [0.9, 0.5, 0.1];
+l_alpha = 0.9;
 DFmax = 1000;
 cv_num = 10;
 
 params = cell(numel(l_alpha) * numel(DFmax) * numel(cv_num), 1);
 
-matlabpool(4);
+%matlabpool(4);
 idx = 1;
 for i = 1 : numel(l_alpha)
 	for j = 1 : numel(DFmax)
@@ -41,7 +42,7 @@ for i = 1 : numel(l_alpha)
 			param.alpha = l_alpha(i);
 			param.DFmax = DFmax(j);
 			param.cv_num = cv_num(k);
-			opts = statset('UseParallel', 'always');
+			opts = statset('UseParallel', 'never');
 			param.opts = opts;
 			params{idx} = param;
 			idx = idx + 1;
