@@ -4,7 +4,7 @@ if (~exist('subset'))
 	subset = [];
 elseif (length(subset) ~= 2)
 	fprintf('Incorrect subset size');
-	break
+	% break
 end
 
 addpath(genpath('../../BrainResearch'));
