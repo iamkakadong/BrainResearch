@@ -12,5 +12,5 @@ function [cvfit] = elas_net_train(X, y, params)
 	options = glmnetSet;
 	options.alpha = params.alpha;
 	options.dfmax = params.DFmax;
-	cvfit = cvglmnet(X, y, 'Gaussian', options, [], params.cv_num, [], true);
+	cvfit = cvglmnet(X, y, 'gaussian', options, [], params.cv_num, [], false);
 end
