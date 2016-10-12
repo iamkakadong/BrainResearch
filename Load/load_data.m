@@ -26,7 +26,7 @@ Returns:
 	% p.Results.mask_type
 	
 	% load summary file
-	rt = load('/data2/tren/OldData/sortedRTs_all_subjects.mat');
+	rt = load('/data/ARL/StroopST_analysis/sortedRTs_all_subjects.mat');
 
 	% transform inputs
 	subs_idx = rt.subs;
@@ -44,7 +44,7 @@ Returns:
 	% load data for subjects in subject_idx
 	for j = 1 : length(subject_idx)
 		fprintf('loading data for subject %d \n', subject_idx(j));
-		tmp_path = strcat('/data2/tren/OldData/', num2str(subject_idx(j), '%04d'), '/snStroop_singletrial_GLM');
+		tmp_path = strcat('/data/ARL/', num2str(subject_idx(j), '%04d'), '/snStroop_singletrial_GLM');
 		% cd(tmp_path);
 		% load reaction time for this subject
 		this_rt = subs_rt(find(subs_idx == subject_idx(j)));
@@ -65,7 +65,7 @@ Returns:
 	if (mask_type == 0)	% basic configuration. gray and white matter
 		mask = load_untouch_nii(strcat(tmp_path, '/mask.img'));
 	elseif (mask_type == 1)	% only white matter
-		mask = load_untouch_nii('/data2/tren/OldData/masks/resliced_MNI-maxprob-thr25-2mm_binary.nii');
+		mask = load_untouch_nii('/data/ARL/ROIs/resliced_MNI-maxprob-thr25-2mm_binary.nii');
 	elseif (mask_type == 2)	% almost_ridge mask
 		mask = load('/data2/tren/OldData/masks/almost_ridge.mat');
 	end

@@ -1,1 +1,1 @@
-addpath('/data2/tren/OldData/NIFTI_20110310');
+addpath('/usr/admin/scripts/matlab/BRAVO2/util/NIFTI_20110310');
