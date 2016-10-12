@@ -26,11 +26,11 @@
  # To start in a certain directory; you probably need to change.
 
  cd /home/tren/BrainResearch/Scripts
- alias matlab='/usr/local/bin/matlab' 
+ alias matlab='/opt/matlab/8.6/bin/matlab'
 
  ## Below are the actual commands to be executed (i.e. to do the work).
  echo "Test job starting at `date`"
- matlab -r "subset=[28,28];elas_net_main"
+ matlab -r "subset=[26,26];elas_net_main"
  #matlab -r "subset=[5,8];elas_net_main"
  #matlab -r "subset=[9,12];elas_net_main"
  #matlab -r "subset=[13,16];elas_net_main"
