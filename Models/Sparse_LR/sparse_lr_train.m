@@ -8,6 +8,6 @@ function [model] = sparse_lr_train(X, y, params)
 	% b = b(:, stats.IndexMinDeviance);
 	options = glmnetSet;
 	options.alpha = params.alpha;
-	options.dfmax = params.dfmax;
+	options.dfmax = params.DFmax;
 	model = cvglmnet(X, y, 'multinomial', options, [], params.cv_num, [], true);
 end
