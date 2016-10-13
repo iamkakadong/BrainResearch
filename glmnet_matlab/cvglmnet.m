@@ -309,7 +309,7 @@ if (parallel == true)
     end
     
     if (offpar)
-        parpool close;
+        delete(gcp('nocreate'));
     end    
 else   
     for i = 1: nfolds        
