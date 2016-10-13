@@ -14,7 +14,6 @@ subject_idx = [151 152 153 158 159 160 171 173 175 176 187 188 189 177 12 13 6 1
 
 fprintf('loading data...\n')
 load data;
-load '../Results/elas_net/elas_net_all.mat';
 
 X = X';
 [n, p] = size(X);
