@@ -36,7 +36,7 @@ cv_num = 10;
 
 params = cell(numel(l_alpha) * numel(DFmax) * numel(cv_num), 1);
 
-%matlabpool(4);
+matlabpool(4);
 idx = 1;
 for i = 1 : numel(l_alpha)
 	for j = 1 : numel(DFmax)
