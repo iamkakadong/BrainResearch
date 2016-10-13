@@ -4,7 +4,7 @@ if (~exist('subset'))
 	subset = [];
 elseif (length(subset) ~= 2)
 	fprintf('Incorrect subset size');
-	break
+	return
 end
 
 addpath(genpath('../../BrainResearch'));
@@ -13,11 +13,16 @@ load_outside_functions;
 subject_idx = [151 152 153 158 159 160 171 173 175 176 187 188 189 177 12 13 6 181 182 183 184 186 190 191 192 193 194 196];
 
 fprintf('loading data...\n')
-[X, y, event_types, subject_range, final_mask] = load_data(subject_idx, 0);
+load data;
+% [X, y, event_types, subject_range, final_mask] = load_data(subject_idx, 0);
 % X = [event_types; X]';	% n * p
 % y = y';	% n * 1
 X = X';
+[n, p] = size(X);
+X = [ones(n, 1), X];
 y = event_types' + 1;
+y_cong = (y == 2);
+y_incong = (y == 0);
 fprintf('finished loading data\n')
 
 % fprintf('normalizing data...\n')
@@ -36,6 +41,7 @@ cv_num = 10;
 params = cell(numel(l_alpha) * numel(DFmax) * numel(cv_num), 1);
 
 %matlabpool(4);
+parpool(4);
 idx = 1;
 for i = 1 : numel(l_alpha)
 	for j = 1 : numel(DFmax)
@@ -44,7 +50,7 @@ for i = 1 : numel(l_alpha)
 			param.alpha = l_alpha(i);
 			param.DFmax = DFmax(j);
 			param.cv_num = cv_num(k);
-			opts = statset('UseParallel', 'never');
+			opts = statset('UseParallel', true);
 			param.opts = opts;
 			params{idx} = param;
 			idx = idx + 1;
@@ -64,7 +70,7 @@ try
 	fprintf('finished evaluating elastic net\n')
 catch ME
 	rethrow(ME);
-	matlabpool close;
+	parpool close;
 end
 
 if (length(subset) == 0)
@@ -74,4 +80,4 @@ else
 end
 save(filename, 'cv_result');
 
-matlabpool close;
+parpool close;
