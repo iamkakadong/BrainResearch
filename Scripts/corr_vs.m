@@ -28,7 +28,7 @@ params = cell(numel(DFmax), 1);
 
 for i = 1:length(DFmax)
 	param = struct;
-	param.DFmax = DFmax;
+	param.DFmax = DFmax(i);
 	params{i} = param;
 end
 
