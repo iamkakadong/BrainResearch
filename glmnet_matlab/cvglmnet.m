@@ -291,9 +291,9 @@ cpredmat = cell(nfolds,1);
 
 if (parallel == true)
     offpar = 0;
-    if matlabpool('size') <= 0
+    if parpool('size') <= 0
         offpar = 1;
-        matlabpool;
+        parpool;
     end
     
     parfor i = 1: nfolds
@@ -309,7 +309,7 @@ if (parallel == true)
     end
     
     if (offpar)
-        matlabpool close;
+        parpool close;
     end    
 else   
     for i = 1: nfolds        
