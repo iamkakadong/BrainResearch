@@ -30,7 +30,9 @@
 
  ## Below are the actual commands to be executed (i.e. to do the work).
  echo "Test job starting at `date`"
- matlab -r "subset=[26,26];elas_net_main"
+ matlab -r "corr_vs"
+ #matlab -r "corr_analysis"
+ #matlab -r "subset=[1,1];elas_net_main"
  #matlab -r "subset=[5,8];elas_net_main"
  #matlab -r "subset=[9,12];elas_net_main"
  #matlab -r "subset=[13,16];elas_net_main"
