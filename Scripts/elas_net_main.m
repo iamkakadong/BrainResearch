@@ -16,6 +16,8 @@ fprintf('loading data...\n')
 %[X, y, event_types, subject_range, final_mask] = load_data(subject_idx, 0);
 load data;
 X = [event_types; X]';	% n * p
+[n, p] = size(X);
+X = [ones(n, 1), X];
 y = y';	% n * 1
 fprintf('finished loading data\n')
 
