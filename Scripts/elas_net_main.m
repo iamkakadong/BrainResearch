@@ -36,7 +36,7 @@ cv_num = 10;
 
 params = cell(numel(l_alpha) * numel(DFmax) * numel(cv_num), 1);
 
-matlabpool(4);
+parpool(4);
 idx = 1;
 for i = 1 : numel(l_alpha)
 	for j = 1 : numel(DFmax)
@@ -65,7 +65,7 @@ try
 	fprintf('finished evaluating elastic net\n')
 catch ME
 	rethrow(ME);
-	matlabpool close;
+	parpool close;
 end
 
 if (length(subset) == 0)
@@ -75,4 +75,4 @@ else
 end
 save(filename, 'cv_result');
 
-matlabpool close;
+parpool close;
