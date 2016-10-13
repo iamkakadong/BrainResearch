@@ -36,7 +36,7 @@ fprintf('performing cross-validation...\n')
 data = struct;
 data.X = X;
 data.y = y;
-cv_results = cross_validate(data, subject_range, @cor_train, @cor_pred, params, @my_r2, subset);
+cv_result = cross_validate(data, subject_range, @cor_train, @cor_pred, params, @my_r2, subset);
 fprintf('finished cross-validation\n');
 
 
