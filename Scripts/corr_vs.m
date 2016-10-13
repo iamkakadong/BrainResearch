@@ -38,3 +38,11 @@ data.X = X;
 data.y = y;
 cv_results = cross_validate(data, subject_range, @lin_reg_train, @lin_reg_pred, params, @my_r2);
 fprintf('finished cross-validation\n');
+
+
+if (length(subset) == 0)
+	filename = '../Results/corr_vs/corr_vs_all.mat';
+else
+	filename = strcat('../Results/corr_vs/corr_vs_', num2str(subset(1)), '_to_', num2str(subset(2)), '.mat');
+end
+save(filename, 'cv_result');
