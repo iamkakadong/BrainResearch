@@ -36,7 +36,7 @@ params.DFmax = 1000;
 data = struct;
 data.X = X;
 data.y = y;
-cv_results = cross_validate(data, subject_range, @lin_reg_train, @lin_reg_pred, params, @my_r2, []);
+cv_results = cross_validate(data, subject_range, @cor_train, @cor_pred, params, @my_r2, []);
 fprintf('finished cross-validation\n');
 
 
