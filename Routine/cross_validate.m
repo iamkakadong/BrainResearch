@@ -27,7 +27,7 @@ if (n_parameters == 0)
 end
 
 if isequal(trainer, @sparse_lr_train)
-	en_res = load '../Results/elas_net/elas_net_all.mat';
+	en_res = load('../Results/elas_net/elas_net_all.mat');
 	en_res = en_res.cv_result_all;
 	idxs = zeros(length(en_res{1}.model), length(en_res));
 	for i = 1:length(en_res)
@@ -54,8 +54,14 @@ for i = 1 : n_parameters
 		y_cv = data.y(cv_idx_range, :);
 
 		if isequal(trainer, @sparse_lr_train)
-			X_train = X_train(:, idxs(:, j));
-			X_cv = X_train(:, idxs(:, j));
+			tmp = zeros(length(idxs), 1);
+			for k = 1 : length(subject_range)
+				if (k ~= j)
+					tmp = tmp + idxs(:, k);
+				end
+			end
+			X_train = X_train(:, tmp ~= 0);
+			X_cv = X_cv(:, tmp ~= 0);
 		end
 
 		model = trainer(X_train, y_train, parameters{i});
