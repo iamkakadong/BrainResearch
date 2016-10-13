@@ -24,11 +24,6 @@ y_cong = (y == 2);
 y_incong = (y == 0);
 fprintf('finished loading data\n')
 
-idxs = zeros(length(cv_result{1}.model), length(cv_result));
-for i = 1:length(cv_result)
-	idxs(:, 1) = cv_result{i}.model~=0;
-end
-
 %l_alpha = [0.9, 0.5, 0.1];
 l_alpha = 0.9;
 DFmax = 1000;
