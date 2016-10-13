@@ -31,8 +31,6 @@ for i = 1:length(DFmax)
 end
 
 fprintf('performing cross-validation...\n')
-params = struct;
-params.DFmax = 1000;
 data = struct;
 data.X = X;
 data.y = y;
