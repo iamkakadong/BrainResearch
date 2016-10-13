@@ -291,7 +291,7 @@ cpredmat = cell(nfolds,1);
 
 if (parallel == true)
     offpar = 0;
-    if isempty(gcp('nocreate')) <= 0
+    if isempty(gcp('nocreate'))
         offpar = 1;
         parpool;
     end
