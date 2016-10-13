@@ -3,7 +3,7 @@ function [model] = sparse_lr_train(X, y, params)
 	[ny, py] = size(y);
 	assert(nx == ny, 'invalid input: number of observations does not match.');
 
-	[b, stats] = lassoglm(X, y, 'binomial', 'Alpha', params.alpha, 'CV', params.cv_num, 'Options', params.opts, 'DFmax', 'params.dfmax');
+	[b, stats] = lassoglm(X, y, 'binomial', 'Alpha', params.alpha, 'CV', params.cv_num, 'Options', params.opts, 'DFmax', params.DFmax);
 
 	b = b(:, fitinfo.IndexMinDeviance);
 	% options = glmnetSet;
