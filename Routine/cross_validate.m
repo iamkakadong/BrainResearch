@@ -72,7 +72,7 @@ for i = 1 : n_parameters
 		res.score = score;
 		res.model = model;
 		res.pred = y_pred;
-		res.param = parameters;
+		res.param = parameters{i};
 		
 		cv_result{i, j} = res;
 		fprintf('subject %d has score %0.3d under configuartion %d\n', [j, score, i]);
