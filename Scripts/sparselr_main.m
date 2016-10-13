@@ -14,9 +14,8 @@ subject_idx = [151 152 153 158 159 160 171 173 175 176 187 188 189 177 12 13 6 1
 
 fprintf('loading data...\n')
 load data;
-% [X, y, event_types, subject_range, final_mask] = load_data(subject_idx, 0);
-% X = [event_types; X]';	% n * p
-% y = y';	% n * 1
+load '../Results/elas_net/elas_net_all.mat';
+
 X = X';
 [n, p] = size(X);
 X = [ones(n, 1), X];
@@ -25,13 +24,10 @@ y_cong = (y == 2);
 y_incong = (y == 0);
 fprintf('finished loading data\n')
 
-% fprintf('normalizing data...\n')
-% last_idx = 0;
-% for i = 1:length(subject_idx)
-	% y(last_idx + 1 : subject_range(i)) = normalize_feature(y(last_idx + 1 : subject_range(i)));
-	% last_idx = subject_range(i);
-% end
-% fprintf('finished normalization\n')
+idxs = zeros(length(cv_result{1}.model), length(cv_result));
+for i = 1:length(cv_result)
+	idxs(:, 1) = cv_result{i}.model~=0;
+end
 
 %l_alpha = [0.9, 0.5, 0.1];
 l_alpha = 0.9;

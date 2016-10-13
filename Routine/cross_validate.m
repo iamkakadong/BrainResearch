@@ -26,6 +26,14 @@ if (n_parameters == 0)
 	n_parameters = 1;
 end
 
+if isequal(trainer, @sparse_lr_train)
+	en_res = load '../Results/elas_net/elas_net_all.mat';
+	idxs = zeros(length(en_res{1}.model), length(en_res));
+	for i = 1:length(en_res)
+		idxs(:, i) = en_res{i}.model~=0;
+	end
+end
+
 cv_result = cell(n_parameters, n_subjects);
 
 for i = 1 : n_parameters
@@ -43,6 +51,11 @@ for i = 1 : n_parameters
 		y_train = data.y(idx_range, :);
 		X_cv = data.X(cv_idx_range, :);
 		y_cv = data.y(cv_idx_range, :);
+
+		if isequal(trainer, @sparse_lr_train)
+			X_train = X_train(:, idxs(:, j));
+			X_cv = X_train(:, idxs(:, j));
+		end
 
 		model = trainer(X_train, y_train, parameters{i});
 		y_pred = predictor(X_cv, model);
