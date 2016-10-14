@@ -1,0 +1,4 @@
+load('../Results/corr_vs/corr_vs_all.mat');
+[np, nt] = size(cv_result);
+scor
+for i = 1:

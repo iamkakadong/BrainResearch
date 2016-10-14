@@ -21,4 +21,4 @@ end
 fprintf('finished normalization\n')
 
 [cr, pval] = corr(X, y);
-save('correlations.mat', 'cr', 'pval');
+save('../Results/correlations.mat', 'cr', 'pval');

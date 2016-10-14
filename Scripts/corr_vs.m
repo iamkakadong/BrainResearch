@@ -29,6 +29,8 @@ params = cell(numel(DFmax), 1);
 for i = 1:length(DFmax)
 	param = struct;
 	param.DFmax = DFmax(i);
+	params.k = [0, 0.01, 0.1, 1];
+	params.cv_num = 10;
 	params{i} = param;
 end
 
