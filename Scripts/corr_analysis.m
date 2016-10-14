@@ -20,5 +20,5 @@ for i = 1:length(subject_idx)
 end
 fprintf('finished normalization\n')
 
-cr = corr(X, y);
-save('correlations.mat', 'cr');
+[cr, pval] = corr(X, y);
+save('correlations.mat', 'cr', 'pval');
