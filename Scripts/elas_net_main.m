@@ -63,7 +63,7 @@ try
 	fprintf('finished evaluating elastic net\n')
 catch ME
 	rethrow(ME);
-	parpool close;
+	delete(gcp('nocreate'));
 end
 
 if (length(subset) == 0)
@@ -73,4 +73,4 @@ else
 end
 save(filename, 'cv_result');
 
-parpool close;
+delete(gcp('nocreate'));
