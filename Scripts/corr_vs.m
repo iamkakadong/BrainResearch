@@ -43,7 +43,7 @@ fprintf('finished cross-validation\n');
 
 
 if (length(subset) == 0)
-	filename = '../Results/corr_vs/corr_vs_all.mat';
+	filename = '../Results/corr_vs/corr_vs_all_new.mat';
 else
 	filename = strcat('../Results/corr_vs/corr_vs_', num2str(subset(1)), '_to_', num2str(subset(2)), '.mat');
 end
