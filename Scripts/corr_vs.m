@@ -1,5 +1,9 @@
-
-subset = [];
+if (~exist('subset'))
+	subset = [];
+elseif (length(subset) ~= 2)
+	fprintf('Incorrect subset size');
+	return
+end
 
 addpath(genpath('../../BrainResearch'));
 load_outside_functions;
