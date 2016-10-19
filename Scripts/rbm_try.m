@@ -1,7 +1,7 @@
 clear all
 
 addpath(genpath('../../BrainResearch'));
-load_outside_functions;
+% load_outside_functions;
 
 load data;
 X = X';
@@ -18,6 +18,6 @@ train_data = X(1 : cutoff, :);
 valid_data = X(cutoff + 1 : end, :);
 
 td.X = train_data;
-vd.X = valid_data
+vd.X = valid_data;
 
 model = rbm_learn(td, vd, params);
