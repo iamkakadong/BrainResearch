@@ -6,6 +6,7 @@ function [model] = sparse_lr_train(X, y, params)
 	[b, stats] = lassoglm(X, y, 'binomial', 'Alpha', params.alpha, 'CV', params.cv_num, 'Options', params.opts, 'DFmax', params.DFmax);
 
 	b = b(:, stats.IndexMinDeviance);
+	model = b;
 	% options = glmnetSet;
 	% options.alpha = params.alpha;
 	% options.dfmax = params.DFmax;
