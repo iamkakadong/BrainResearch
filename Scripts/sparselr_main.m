@@ -26,7 +26,7 @@ y = event_types' + 1;
 fprintf('finished loading data\n')
 
 %l_alpha = [0.9, 0.5, 0.1];
-l_alpha = 0.9;
+l_alpha = 0.1;
 DFmax = 1000;
 cv_num = 10;
 
