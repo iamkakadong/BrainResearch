@@ -19,10 +19,10 @@ X = X';
 [n, p] = size(X);
 X = [ones(n, 1), X];
 y = event_types' + 1;
-y_cong = (y == 2);
-y_incong = (y == 0);
-X = X(y_cong~=0 + y_incong~=0, :);
-y = y(y_cong~=0 + y_incong~=0, :);
+% y_cong = (y == 2);
+% y_incong = (y == 0);
+% X = X(y_cong~=0 + y_incong~=0, :);
+% y = y(y_cong~=0 + y_incong~=0, :);
 fprintf('finished loading data\n')
 
 %l_alpha = [0.9, 0.5, 0.1];
