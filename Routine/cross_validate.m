@@ -62,15 +62,15 @@ for i = 1 : n_parameters
 			end
 			X_train = X_train(:, tmp ~= 0);
 			X_cv = X_cv(:, tmp ~= 0);
-			
+
 			y_train_cong = (y_train == 2);
 			y_train_incong = (y_train == 0);
 			y_cv_cong = (y_cv == 2);
 			y_cv_incong = (y_cv == 0);
 			X_train = X_train(y_train_cong~=0 + y_train_incong~=0, :);
-			y_train = y_train(y_train_cong~=0 + y_train_incong~=0, :);
+			y_train = y_train(y_train_cong~=0 + y_train_incong~=0, :) / 2;
 			X_cv = X_cv(y_cv_cong~=0 + y_cv_incong~=0, :);
-			y_cv = y_cv(y_cv_cong~=0 + y_cv_incong~=0, :);
+			y_cv = y_cv(y_cv_cong~=0 + y_cv_incong~=0, :) / 2;
 		end
 
 		model = trainer(X_train, y_train, parameters{i});
