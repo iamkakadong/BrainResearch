@@ -35,16 +35,21 @@ for iter = 1 : max_iter
         W = W + step * (p0 * v0' - pk * v')';
         a = a + step * (p0 - pk);
         b = b + step * (v0 - v);
+	fprintf('current error %0.5f', ce(v0, W, h, b));
 %         err = err + ce(v0, W, h, b);
     end
 %     W = W + step * w_grad;
 %     a = a + step * a_grad;
 %     b = b + step * b_grad;
+    if (rem(iter, 10) == 1)
     err = 0;
     for i = 1 : n
         vt = train.X(i, :)';
         h = sample_h(vt, W, a);
-        err = err + ce(vt, W, h, b);
+        tmp = ce(ct, W, h, b);
+	fprintf('Error in sample %0.5f\n', tmp);
+%	err = err + ce(vt, W, h, b);
+	err = err + tmp;
     end
     err_t(iter) = err / n;
 
@@ -56,6 +61,7 @@ for iter = 1 : max_iter
     end
     err_v(iter) = err / vn;
     fprintf('current iteration %d, train error %0.5f, valid error %0.5f \n', iter, err_t(iter), err_v(iter));
+end
 end
 
 model = struct;
