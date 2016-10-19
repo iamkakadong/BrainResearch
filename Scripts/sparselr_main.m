@@ -26,8 +26,8 @@ y = event_types' + 1;
 fprintf('finished loading data\n')
 
 %l_alpha = [0.9, 0.5, 0.1];
-l_alpha = [0.9, 0.3, 0.01];
-DFmax = 1500;
+l_alpha = 0.1;
+DFmax = 1000;
 cv_num = 10;
 
 params = cell(numel(l_alpha) * numel(DFmax) * numel(cv_num), 1);
