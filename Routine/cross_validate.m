@@ -54,14 +54,14 @@ for i = 1 : n_parameters
 		y_cv = data.y(cv_idx_range, :);
 
 		if isequal(trainer, @sparse_lr_train)
-			tmp = zeros(length(idxs), 1);
-			for k = 1 : length(subject_range)
-				if (k ~= j)
-					tmp = tmp + idxs(:, k);
-				end
-			end
-			X_train = X_train(:, tmp ~= 0);
-			X_cv = X_cv(:, tmp ~= 0);
+			% tmp = zeros(length(idxs), 1);
+			% for k = 1 : length(subject_range)
+			% 	if (k ~= j)
+			% 		tmp = tmp + idxs(:, k);
+			% 	end
+			% end
+			% X_train = X_train(:, tmp ~= 0);
+			% X_cv = X_cv(:, tmp ~= 0);
 
 			y_train_cong = (y_train == 2);
 			y_train_incong = (y_train == 0);
@@ -83,7 +83,7 @@ for i = 1 : n_parameters
 		res.pred = y_pred;
 		res.param = parameters{i};
 		
-		cv_result{i, j} = res;
+		cv_result{i, j+1} = res;
 		fprintf('subject %d has score %0.3d under configuartion %d\n', [j, score, i]);
 	end
 end
