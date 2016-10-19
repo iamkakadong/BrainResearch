@@ -15,7 +15,7 @@
  ##PBS -o /path/to/output/directory/testjob.out
  
  ##Requests 1 node to run 1 process in the queue.
- #PBS -l nodes=1:ppn=4,pmem=24000mb,walltime=24:00:00
+ #PBS -q dsi -l nodes=1:ppn=4,pmem=24000mb,walltime=24:00:00
  
  
  ## Request mail when job ends, or is aborted (optional, default is "a" only)
@@ -30,7 +30,7 @@
 
  ## Below are the actual commands to be executed (i.e. to do the work).
  echo "Test job starting at `date`"
- #matlab -r "subset=[1,1];sparselr_main"
+ matlab -r "subset=[25,28];sparselr_main"
  #matlab -r "subset=[1,1];corr_vs"
  #matlab -r "subset=[1,4];elas_net_main"
  #matlab -r "subset=[5,8];elas_net_main"
@@ -39,7 +39,7 @@
  #matlab -r "subset=[17,20];elas_net_main"
  #matlab -r "subset=[21,24];elas_net_main"
  #matlab -r "subset=[25,28];elas_net_main"
- matlab -r "rbm_try"
+ #matlab -r "rbm_try"
  echo "Test job finished at `date`"
  #PBS -N elastic_net_cv
 
