@@ -33,7 +33,7 @@ cv_num = 10;
 params = cell(numel(l_alpha) * numel(DFmax) * numel(cv_num), 1);
 
 %matlabpool(4);
-% parpool(2);
+parpool(4);
 idx = 1;
 for i = 1 : numel(l_alpha)
 	for j = 1 : numel(DFmax)
@@ -42,7 +42,7 @@ for i = 1 : numel(l_alpha)
 			param.alpha = l_alpha(i);
 			param.DFmax = DFmax(j);
 			param.cv_num = cv_num(k);
-			opts = statset('UseParallel', false);
+			opts = statset('UseParallel', true);
 			param.opts = opts;
 			params{idx} = param;
 			idx = idx + 1;
@@ -63,6 +63,7 @@ try
 catch ME
 	rethrow(ME);
 	% parpool close;
+	delete(gcp('nocreate'));
 end
 
 if (length(subset) == 0)
@@ -73,3 +74,4 @@ end
 save(filename, 'cv_result');
 
 % parpool close;
+delete(gcp('nocreate'));
