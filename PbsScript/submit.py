@@ -21,6 +21,7 @@ def submit(f):
 		fnew.close()
 		bc = 'qsub ' + fname
 		os.system(bc)
+		os.remove(fname)
 
 if __name__ == '__main__':
 	f = file('testjob.pbs', 'r')
