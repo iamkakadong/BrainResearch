@@ -1,13 +1,15 @@
 import os
 
-def buildfile(texts, idx):
+def buildfile(texts, idx, script_name):
 	ntext = list()
 	for line in texts:
 		line = line.replace('sub_idx', str(idx))
+		line = line.replace('script_name', script_name)
 		ntext.append(line)
 	return ntext
 
 def submit(f):
+	script_name = 'elas_net_main'
 	name = f.name
 	tokens = name.split('.')
 	prefix = tokens[0]

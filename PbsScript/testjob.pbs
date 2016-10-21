@@ -30,7 +30,7 @@
 
  ## Below are the actual commands to be executed (i.e. to do the work).
  echo "Test job starting at `date`"
- matlab -r "subset=[sub_idx,sub_idx];sparselr_main"
+ matlab -r "subset=[sub_idx,sub_idx];script_name"
  #matlab -r "subset=[1,1];corr_vs"
  #matlab -r "subset=[1,4];elas_net_main"
  #matlab -r "subset=[5,8];elas_net_main"
