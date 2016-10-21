@@ -7,7 +7,7 @@ elseif (length(subset) ~= 2)
 	% break
 end
 
-addpath(genpath('../../Toolbox'));
+addpath(genpath('../../BrainResearch'));
 load_outside_functions;
 
 subject_idx = [151 152 153 158 159 160 171 173 175 176 187 188 189 177 12 13 6 181 182 183 184 186 190 191 192 193 194 196];
@@ -30,8 +30,8 @@ fprintf('finished normalization\n')
 
 %l_alpha = [0.9, 0.5, 0.1];
 l_alpha = [0.01, 0.001];
-DFmax = 1000;
-cv_num = 10;
+DFmax = 3000;
+cv_num = 12;
 
 params = cell(numel(l_alpha) * numel(DFmax) * numel(cv_num), 1);
 
