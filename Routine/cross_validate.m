@@ -82,8 +82,9 @@ for i = 1 : n_parameters
 		res.model = model;
 		res.pred = y_pred;
 		res.param = parameters{i};
+		res.truth = y_cv;
 		
-		cv_result{i, j+1} = res;
+		cv_result{i, j} = res;
 		fprintf('subject %d has score %0.3d under configuartion %d\n', [j, score, i]);
 	end
 end
