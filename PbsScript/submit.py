@@ -1,3 +1,5 @@
+import os
+
 def buildfile(texts, idx):
 	ntext = list()
 	for line in texts:
@@ -18,6 +20,7 @@ def submit(f):
 		fnew.writelines(tmp_texts)
 		fnew.close()
 		bc = 'qsub ' + fname
+		os.system(bc)
 
 if __name__ == '__main__':
 	f = file('testjob.pbs', 'r')
