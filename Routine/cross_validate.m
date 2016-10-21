@@ -26,6 +26,15 @@ if (n_parameters == 0)
 	n_parameters = 1;
 end
 
+if isequal(trainer, @sparse_lr_train)
+	en_res = load('../Results/elas_net/elas_net_all.mat');
+	en_res = en_res.cv_result_all;
+	idxs = zeros(length(en_res{1}.model), length(en_res));
+	for i = 1:length(en_res)
+		idxs(:, i) = en_res{i}.model~=0;
+	end
+end
+
 cv_result = cell(n_parameters, n_subjects);
 
 for i = 1 : n_parameters
@@ -44,6 +53,26 @@ for i = 1 : n_parameters
 		X_cv = data.X(cv_idx_range, :);
 		y_cv = data.y(cv_idx_range, :);
 
+		if isequal(trainer, @sparse_lr_train)
+			% tmp = zeros(length(idxs), 1);
+			% for k = 1 : length(subject_range)
+			% 	if (k ~= j)
+			% 		tmp = tmp + idxs(:, k);
+			% 	end
+			% end
+			% X_train = X_train(:, tmp ~= 0);
+			% X_cv = X_cv(:, tmp ~= 0);
+
+			y_train_cong = (y_train == 2);
+			y_train_incong = (y_train == 0);
+			y_cv_cong = (y_cv == 2);
+			y_cv_incong = (y_cv == 0);
+			X_train = X_train(y_train_cong~=0 + y_train_incong~=0, :);
+			y_train = y_train(y_train_cong~=0 + y_train_incong~=0, :) / 2;
+			X_cv = X_cv(y_cv_cong~=0 + y_cv_incong~=0, :);
+			y_cv = y_cv(y_cv_cong~=0 + y_cv_incong~=0, :) / 2;
+		end
+
 		model = trainer(X_train, y_train, parameters{i});
 		y_pred = predictor(X_cv, model);
 		score = evaluator(y_cv, y_pred);
@@ -52,7 +81,8 @@ for i = 1 : n_parameters
 		res.score = score;
 		res.model = model;
 		res.pred = y_pred;
-		res.param = parameters;
+		res.param = parameters{i};
+		res.truth = y_cv;
 		
 		cv_result{i, j} = res;
 		fprintf('subject %d has score %0.3d under configuartion %d\n', [j, score, i]);
