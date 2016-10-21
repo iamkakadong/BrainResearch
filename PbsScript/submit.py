@@ -1,4 +1,5 @@
 import os
+import sys
 
 def buildfile(texts, idx, script_name):
 	ntext = list()
@@ -8,16 +9,15 @@ def buildfile(texts, idx, script_name):
 		ntext.append(line)
 	return ntext
 
-def submit(f):
-	script_name = 'elas_net_main'
+def submit(f, script, subjects):
 	name = f.name
 	tokens = name.split('.')
 	prefix = tokens[0]
 	suffix = tokens[1]
 	texts = f.readlines()
-	for i in range(1):
-		tmp_texts = buildfile(texts, i+1)
-		fname = prefix + str(i + 1) + '.' + suffix
+	for i in subjects:
+		tmp_texts = buildfile(texts, i, script)
+		fname = prefix + str(i) + '.' + suffix
 		fnew = file(fname, 'w')
 		fnew.writelines(tmp_texts)
 		fnew.close()
@@ -26,6 +26,9 @@ def submit(f):
 		os.remove(fname)
 
 if __name__ == '__main__':
+	args = sys.argv
+	script = args[1]
+	subjects = range(int(args[2]), int(args[3]) + 1)
 	f = file('testjob.pbs', 'r')
-	submit(f)
+	submit(f, script, subjects)
 	f.close()
