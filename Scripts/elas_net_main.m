@@ -29,7 +29,7 @@ end
 fprintf('finished normalization\n')
 
 %l_alpha = [0.9, 0.5, 0.1];
-l_alpha = 0.1;
+l_alpha = [0.01, 0.001];
 DFmax = 1000;
 cv_num = 10;
 
@@ -70,7 +70,7 @@ end
 if (length(subset) == 0)
 	filename = '../Results/elas_net/elas_net_all.mat';
 else
-	filename = strcat('../Results/elas_net/nn_elas_net_', num2str(subset(1)), '_to_', num2str(subset(2)), '.mat');
+	filename = strcat('../Results/elas_net/nnn_elas_net_', num2str(subset(1)), '_to_', num2str(subset(2)), '.mat');
 end
 save(filename, 'cv_result');
 
