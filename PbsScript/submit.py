@@ -29,6 +29,7 @@ if __name__ == '__main__':
 	args = sys.argv
 	script = args[1]
 	subjects = range(int(args[2]), int(args[3]) + 1)
-	f = file('testjob.pbs', 'r')
+	pbsname = args[4]
+	f = file(pbsname + '.pbs', 'r')
 	submit(f, script, subjects)
 	f.close()
