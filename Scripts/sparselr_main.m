@@ -25,9 +25,9 @@ y = event_types' + 1;
 % y = y(y_cong~=0 + y_incong~=0, :);
 fprintf('finished loading data\n')
 
-l_alpha = [0.9, 0.1, 0.01];
+l_alpha = [0.9, 0.1, 0.01, 0.001];
 % l_alpha = 0.1;
-DFmax = 1000;
+DFmax = 3000;
 cv_num = 10;
 
 params = cell(numel(l_alpha) * numel(DFmax) * numel(cv_num), 1);
@@ -69,7 +69,7 @@ end
 if (length(subset) == 0)
 	filename = '../Results/sparse_lr_all.mat';
 else
-	filename = strcat('../Results/sparse_lr/n_sparse_lr_', num2str(subset(1)), '_to_', num2str(subset(2)), '.mat');
+	filename = strcat('../Results/sparse_lr/nn_sparse_lr_', num2str(subset(1)), '_to_', num2str(subset(2)), '.mat');
 end
 save(filename, 'cv_result');
 

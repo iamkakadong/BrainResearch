@@ -37,6 +37,8 @@ end
 
 cv_result = cell(n_parameters, n_subjects);
 
+size(data.X)
+
 for i = 1 : n_parameters
 	for j = beg_sub : end_sub
 		fprintf('cross-validating subject %d with parameter set #%d... \n', [j,i]);

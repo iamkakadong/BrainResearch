@@ -15,8 +15,7 @@ subject_idx = [151 152 153 158 159 160 171 173 175 176 187 188 189 177 12 13 6 1
 fprintf('loading data...\n')
 %[X, y, event_types, subject_range, final_mask] = load_data(subject_idx, 0);
 load data;
-%X = [event_types; X]';	% n * p
-X = X';
+X = [event_types; X]';	% n * p
 y = y';	% n * 1
 fprintf('finished loading data\n')
 
@@ -29,7 +28,7 @@ end
 fprintf('finished normalization\n')
 
 %l_alpha = [0.9, 0.5, 0.1];
-l_alpha = [0.01, 0.001];
+l_alpha = [0.1, 0.01, 0.001];
 DFmax = 3000;
 cv_num = 12;
 
