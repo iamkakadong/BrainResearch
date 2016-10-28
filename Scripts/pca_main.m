@@ -17,7 +17,7 @@ fprintf('loading data...\n')
 load pc_results;
 load data;
 X = SCORE;
-X = [event_types'; X];	% n * p
+X = [event_types', X];	% n * p
 y = y';	% n * 1
 fprintf('finished loading data\n')
 
