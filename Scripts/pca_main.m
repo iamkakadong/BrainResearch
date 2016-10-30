@@ -16,7 +16,7 @@ fprintf('loading data...\n')
 %[X, y, event_types, subject_range, final_mask] = load_data(subject_idx, 0);
 load pc_results;
 load data;
-X = SCORE;
+X = SCORE(:, 1:15);
 X = [event_types', X];	% n * p
 y = y';	% n * 1
 fprintf('finished loading data\n')
@@ -31,28 +31,30 @@ fprintf('finished normalization\n')
 
 %l_alpha = [0.9, 0.5, 0.1];
 %l_alpha = [0.1, 0.01, 0.001];
-l_alpha = 0.01;
-DFmax = 3000;
-cv_num = 12;
+% l_alpha = 0.01;
+% DFmax = 3000;
+% cv_num = 12;
 
-params = cell(numel(l_alpha) * numel(DFmax) * numel(cv_num), 1);
+% params = cell(numel(l_alpha) * numel(DFmax) * numel(cv_num), 1);
 
-parpool(4);
-idx = 1;
-for i = 1 : numel(l_alpha)
-	for j = 1 : numel(DFmax)
-		for k = 1 : numel(cv_num)
-			param = struct;
-			param.alpha = l_alpha(i);
-			param.DFmax = DFmax(j);
-			param.cv_num = cv_num(k);
-			opts = statset('UseParallel', true);
-			param.opts = opts;
-			params{idx} = param;
-			idx = idx + 1;
-		end
-	end
-end
+% parpool(4);
+% idx = 1;
+% for i = 1 : numel(l_alpha)
+% 	for j = 1 : numel(DFmax)
+% 		for k = 1 : numel(cv_num)
+% 			param = struct;
+% 			param.alpha = l_alpha(i);
+% 			param.DFmax = DFmax(j);
+% 			param.cv_num = cv_num(k);
+% 			opts = statset('UseParallel', true);
+% 			param.opts = opts;
+% 			params{idx} = param;
+% 			idx = idx + 1;
+% 		end
+% 	end
+% end
+
+params = {};
 
 data = struct;
 data.X = X;
@@ -61,7 +63,7 @@ data.y = y;
 try
 	fprintf('evaluating elastic net...\n')
 	tic;
-	cv_result = cross_validate(data, subject_range, @elas_net_train, @elas_net_pred, params, @my_r2, subset);
+	cv_result = cross_validate(data, subject_range, @lin_reg_train, @lin_reg_pred, params, @my_r2, subset);
 	toc
 	fprintf('finished evaluating elastic net\n')
 catch ME

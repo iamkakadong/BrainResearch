@@ -1,6 +1,7 @@
 cr = load('../Results/correlations.mat');
 cr = cr.cr;
-cv_result = load('../Results/elas_net/elas_net_nocondition_a1e-1.mat');
+% cv_result = load('../Results/elas_net/elas_net_nocondition_a1e-1.mat');
+cv_result = load('../Results/elas_net/elas_net_all_a1e-1.mat');
 cv_result = cv_result.cv_result_all;
 
 p = length(cv_result{1}.model);
