@@ -30,7 +30,7 @@ fprintf('finished loading data\n')
 %l_alpha = [0.9, 0.1, 0.01, 0.001];
 %l_alpha = [0.9, 0.1, 0.01];
 l_alpha = 0.01;
-% DFmax = 3000;
+DFmax = 3000;
 cv_num = 26;
 
 params = cell(numel(l_alpha) * numel(DFmax) * numel(cv_num), 1);

@@ -74,7 +74,7 @@ end
 if (length(subset) == 0)
 	filename = '../Results/elas_net/elas_net_all.mat';
 else
-	filename = strcat('../Results/pca/pc_', num2str(subset(1)), '_to_', num2str(subset(2)), '.mat');
+	filename = strcat('../Results/pca/15pc_', num2str(subset(1)), '_to_', num2str(subset(2)), '.mat');
 end
 save(filename, 'cv_result');
 
