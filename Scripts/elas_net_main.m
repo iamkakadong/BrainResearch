@@ -59,7 +59,7 @@ task = 'regression';
 try
 	fprintf('evaluating elastic net...\n')
 	tic;
-	cv_result = cross_validate(data, subject_range, @sparse_lr_train, @sparse_lr_pred, params, @my_acc, task, subset);
+	cv_result = cross_validate(data, subject_range, @elas_net_train, @elas_net_pred, params, @my_r2, task, subset);
 	toc
 	fprintf('finished evaluating elastic net\n')
 catch ME

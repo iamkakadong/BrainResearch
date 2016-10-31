@@ -1,5 +1,5 @@
 function [pred] = pca_pred(X, model)
-	X = bsxfun(@minus, X, mean(X));
-	Xscore = X * model.coeff;
-	pred = lin_reg_pred(Xscore, model.b);
+	assert (model.npc = length(model.b));
+	X = X(:, 1 : model.npc);
+	pred = lin_reg_pred(X, model.b);
 end

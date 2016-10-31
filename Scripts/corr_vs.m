@@ -49,7 +49,7 @@ data = struct;
 data.X = X;
 data.y = y;
 task = 'regression';
-cv_result = cross_validate(data, subject_range, @sparse_lr_train, @sparse_lr_pred, params, @my_acc, task, subset);
+cv_result = cross_validate(data, subject_range, @cor_train, @cor_pred, params, @my_r2, task, subset);
 fprintf('finished cross-validation\n');
 
 

@@ -39,41 +39,39 @@ cv_result = cell(n_parameters, n_subjects);
 
 size(data.X)
 
-for i = 1 : n_parameters
-	for j = beg_sub : end_sub
+for j = beg_sub : end_sub
+	if (j == 1) 
+		idx_range = (subject_range(j) + 1) : subject_range(n_subjects); 
+		cv_idx_range = 1 : subject_range(j);
+	else 
+		idx_range = [1 : subject_range(j - 1), (subject_range(j) + 1) : subject_range(n_subjects)]; 
+		cv_idx_range = (subject_range(j - 1) + 1) : subject_range(j);
+	end
+
+	X_train = data.X(idx_range, :);
+	y_train = data.y(idx_range, :);
+	X_cv = data.X(cv_idx_range, :);
+	y_cv = data.y(cv_idx_range, :);
+	
+	if isequal(task, 'classification')
+		y_train_cong = (y_train == 2);
+		y_train_incong = (y_train == 0);
+		y_cv_cong = (y_cv == 2);
+		y_cv_incong = (y_cv == 0);
+		X_train = X_train(y_train_cong~=0 + y_train_incong~=0, :);
+		y_train = y_train(y_train_cong~=0 + y_train_incong~=0, :) / 2;
+		X_cv = X_cv(y_cv_cong~=0 + y_cv_incong~=0, :);
+		y_cv = y_cv(y_cv_cong~=0 + y_cv_incong~=0, :) / 2;
+	end
+
+	if isequal(trainer, @pca_train)
+		[coeff, score, ~, ~, explained] = pca(X_train);
+		X_train = score;
+		X_cv = bsxfun(@minus, X_cv, mean(X_cv)) * coeff;
+	end
+
+	for i = 1 : n_parameters
 		fprintf('cross-validating subject %d with parameter set #%d... \n', [j,i]);
-		if (j == 1) 
-			idx_range = (subject_range(j) + 1) : subject_range(n_subjects); 
-			cv_idx_range = 1 : subject_range(j);
-		else 
-			idx_range = [1 : subject_range(j - 1), (subject_range(j) + 1) : subject_range(n_subjects)]; 
-			cv_idx_range = (subject_range(j - 1) + 1) : subject_range(j);
-		end
-
-		X_train = data.X(idx_range, :);
-		y_train = data.y(idx_range, :);
-		X_cv = data.X(cv_idx_range, :);
-		y_cv = data.y(cv_idx_range, :);
-
-		if isequal(task, 'classification')
-			% tmp = zeros(length(idxs), 1);
-			% for k = 1 : length(subject_range)
-			% 	if (k ~= j)
-			% 		tmp = tmp + idxs(:, k);
-			% 	end
-			% end
-			% X_train = X_train(:, tmp ~= 0);
-			% X_cv = X_cv(:, tmp ~= 0);
-
-			y_train_cong = (y_train == 2);
-			y_train_incong = (y_train == 0);
-			y_cv_cong = (y_cv == 2);
-			y_cv_incong = (y_cv == 0);
-			X_train = X_train(y_train_cong~=0 + y_train_incong~=0, :);
-			y_train = y_train(y_train_cong~=0 + y_train_incong~=0, :) / 2;
-			X_cv = X_cv(y_cv_cong~=0 + y_cv_incong~=0, :);
-			y_cv = y_cv(y_cv_cong~=0 + y_cv_incong~=0, :) / 2;
-		end
 
 		model = trainer(X_train, y_train, parameters{i});
 		y_pred = predictor(X_cv, model);

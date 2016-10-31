@@ -30,38 +30,37 @@ end
 fprintf('finished normalization\n')
 
 %l_alpha = [0.9, 0.5, 0.1];
-%l_alpha = [0.1, 0.01, 0.001];
+l_alpha = [0.9, 0.1, 0.01, 0.001];
+npcs = [15, 100, 500, 1500];
 % l_alpha = 0.01;
 % DFmax = 3000;
-% cv_num = 12;
+cv_num = 24;
 
-% params = cell(numel(l_alpha) * numel(DFmax) * numel(cv_num), 1);
+params = cell(numel(l_alpha) * numel(cv_num), 1);
 
-% parpool(4);
-% idx = 1;
-% for i = 1 : numel(l_alpha)
-% 	for j = 1 : numel(DFmax)
-% 		for k = 1 : numel(cv_num)
-% 			param = struct;
-% 			param.alpha = l_alpha(i);
-% 			param.DFmax = DFmax(j);
-% 			param.cv_num = cv_num(k);
-% 			opts = statset('UseParallel', true);
-% 			param.opts = opts;
-% 			params{idx} = param;
-% 			idx = idx + 1;
-% 		end
-% 	end
-% end
-
-pc_explained = [0.5, 0.6, 0.7, 0.8, 0.9, 0.95, 0.99];
-params = cell(numel(pc_explained), 1);
-
-for i = 1 : numel(pc_explained)
-	param = struct;
-	param.pc_explained = pc_explained(i);
-	params{i} = param;
+parpool(4);
+idx = 1;
+for i = 1 : numel(l_alpha)
+	for k = 1 : numel(cv_num)
+		param = struct;
+		param.alpha = l_alpha(i);
+		param.npc = npcs;
+		param.cv_num = cv_num(k);
+		opts = statset('UseParallel', true);
+		param.opts = opts;
+		params{idx} = param;
+		idx = idx + 1;
+	end
 end
+
+% pc_explained = [0.5, 0.6, 0.7, 0.8, 0.9, 0.95, 0.99];
+% params = cell(numel(pc_explained), 1);
+
+% for i = 1 : numel(pc_explained)
+% 	param = struct;
+% 	param.pc_explained = pc_explained(i);
+% 	params{i} = param;
+% end
 
 data = struct;
 data.X = X;
@@ -71,7 +70,7 @@ task = 'regression';
 try
 	fprintf('evaluating elastic net...\n')
 	tic;
-	cv_result = cross_validate(data, subject_range, @sparse_lr_train, @sparse_lr_pred, params, @my_acc, task, subset);
+	cv_result = cross_validate(data, subject_range, @pca_train, @pca_pred, params, @my_r2, task, subset);
 	toc
 	fprintf('finished evaluating elastic net\n')
 catch ME
