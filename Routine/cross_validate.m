@@ -1,4 +1,4 @@
-function [ cv_result ] = cross_validate( data, subject_range, trainer, predictor, parameters, evaluator, subset )
+function [ cv_result ] = cross_validate( data, subject_range, trainer, predictor, parameters, evaluator, task, subset )
 %CROSS_VALIDATE Summary of this function goes here
 %   Detailed explanation goes here:
 
@@ -26,7 +26,7 @@ if (n_parameters == 0)
 	n_parameters = 1;
 end
 
-if isequal(trainer, @sparse_lr_train)
+if isequal(task, 'classification')
 	en_res = load('../Results/elas_net/elas_net_all.mat');
 	en_res = en_res.cv_result_all;
 	idxs = zeros(length(en_res{1}.model), length(en_res));
@@ -55,7 +55,7 @@ for i = 1 : n_parameters
 		X_cv = data.X(cv_idx_range, :);
 		y_cv = data.y(cv_idx_range, :);
 
-		if isequal(trainer, @sparse_lr_train)
+		if isequal(task, 'classification')
 			% tmp = zeros(length(idxs), 1);
 			% for k = 1 : length(subject_range)
 			% 	if (k ~= j)

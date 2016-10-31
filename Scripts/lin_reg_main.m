@@ -1,3 +1,4 @@
+% Deprecated
 clear all
 
 addpath(genpath('../../Toolbox'));

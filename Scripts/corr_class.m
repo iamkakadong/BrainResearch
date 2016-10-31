@@ -17,16 +17,6 @@ X = [event_types; X]';
 y = y';	% n * 1
 fprintf('finished loading data\n')
 
-
-fprintf('normalizing data...\n')
-last_idx = 0;
-for i = 1:length(subject_idx)
-	y(last_idx + 1 : subject_range(i)) = normalize_feature(y(last_idx + 1 : subject_range(i)));
-	last_idx = subject_range(i);
-end
-fprintf('finished normalization\n')
-
-
 DFmax = [50, 250, 500];
 l_alpha = [0.9, 0.1, 0.01, 0.001];
 params = cell(numel(DFmax) * numel(l_alpha), 1);
@@ -48,7 +38,8 @@ fprintf('performing cross-validation...\n')
 data = struct;
 data.X = X;
 data.y = y;
-cv_result = cross_validate(data, subject_range, @cor_train, @cor_pred, params, @my_r2, subset);
+task = 'classification';
+cv_result = cross_validate(data, subject_range, @cor_train, @cor_pred, params, @my_r2, task, subset);
 fprintf('finished cross-validation\n');
 
 
