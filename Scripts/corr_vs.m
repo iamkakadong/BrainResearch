@@ -28,14 +28,20 @@ fprintf('finished normalization\n')
 
 
 DFmax = [50, 250, 500];
-params = cell(numel(DFmax), 1);
+l_alpha = [0.9, 0.1, 0.01, 0.001];
+params = cell(numel(DFmax) * numel(l_alpha), 1);
 
 for i = 1:length(DFmax)
-	param = struct;
-	param.DFmax = DFmax(i);
-	param.k = [0, 0.01, 0.1, 1];
-	param.cv_num = 10;
-	params{i} = param;
+	for j = 1:length(l_alpha)
+		param = struct;
+		param.DFmax = DFmax(i);
+		% param.k = [0, 0.01, 0.1, 1];
+		param.alpha = l_alpha(j);
+		param.cv_num = 26;
+		opts = statset('UseParallel', true);
+		param.opts = opts;
+		params{(i - 1) * length(DFmax) + j} = param;
+	end
 end
 
 fprintf('performing cross-validation...\n')
