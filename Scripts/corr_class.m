@@ -13,8 +13,10 @@ subject_idx = [151 152 153 158 159 160 171 173 175 176 187 188 189 177 12 13 6 1
 fprintf('loading data...\n')
 %[X, y, event_types, subject_range, final_mask] = load_data(subject_idx, 0);
 load data;
-X = [event_types; X]';
-y = y';	% n * 1
+% X = [event_types; X]';
+X = [ones(n, 1), X];
+y = event_types' + 1;
+% y = y';	% n * 1
 fprintf('finished loading data\n')
 
 DFmax = [50, 250, 500];
@@ -39,7 +41,7 @@ data = struct;
 data.X = X;
 data.y = y;
 task = 'classification';
-cv_result = cross_validate(data, subject_range, @cor_train, @cor_pred, params, @my_r2, task, subset);
+cv_result = cross_validate(data, subject_range, @corr_lr_train, @corr_lr_pred, params, @my_acc, task, subset);
 fprintf('finished cross-validation\n');
 
 
