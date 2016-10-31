@@ -27,7 +27,7 @@ end
 fprintf('finished normalization\n')
 
 
-DFmax = [50, 250];
+DFmax = [50, 250, 500];
 params = cell(numel(DFmax), 1);
 
 for i = 1:length(DFmax)
@@ -47,8 +47,8 @@ fprintf('finished cross-validation\n');
 
 
 if (length(subset) == 0)
-	filename = '../Results/corr_vs/corr_vs_all_nnew.mat';
+	filename = '../Results/abs_corr_vs/corr_vs_all_nnew.mat';
 else
-	filename = strcat('../Results/corr_vs/ncorr_vs_', num2str(subset(1)), '_to_', num2str(subset(2)), '.mat');
+	filename = strcat('../Results/abs_corr_vs/abscorr_vs_', num2str(subset(1)), '_to_', num2str(subset(2)), '.mat');
 end
 save(filename, 'cv_result');

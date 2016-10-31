@@ -14,10 +14,10 @@ subject_idx = [151 152 153 158 159 160 171 173 175 176 187 188 189 177 12 13 6 1
 
 fprintf('loading data...\n')
 %[X, y, event_types, subject_range, final_mask] = load_data(subject_idx, 0);
-load pc_results;
+% load pc_results;
 load data;
-X = SCORE(:, 1:15);
-X = [event_types', X];	% n * p
+% X = SCORE(:, 1:15);
+X = [event_types; X]';	% n * p
 y = y';	% n * 1
 fprintf('finished loading data\n')
 
@@ -63,7 +63,7 @@ data.y = y;
 try
 	fprintf('evaluating elastic net...\n')
 	tic;
-	cv_result = cross_validate(data, subject_range, @lin_reg_train, @lin_reg_pred, params, @my_r2, subset);
+	cv_result = cross_validate(data, subject_range, @pca_train, @pca_pred, params, @my_r2, subset);
 	toc
 	fprintf('finished evaluating elastic net\n')
 catch ME
