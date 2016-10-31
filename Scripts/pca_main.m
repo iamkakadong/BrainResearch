@@ -54,7 +54,14 @@ fprintf('finished normalization\n')
 % 	end
 % end
 
-params = {};
+pc_explained = [0.5, 0.6, 0.7, 0.8, 0.9, 0.95, 0.99];
+params = cell(numel(pc_explained), 1);
+
+for i = 1 : numel(pc_explained)
+	param = struct;
+	param.pc_explained = pc_explained(i);
+	params{i} = param;
+end
 
 data = struct;
 data.X = X;
