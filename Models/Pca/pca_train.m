@@ -37,5 +37,6 @@ function [model] = pca_train(X, y, param)
 	model = struct;
 	model.b = b(:, fitinfo.IndexMinMSE);
 	model.npc = npc(idx);
-
+	model.fitinfo = fitinfo;
+	model.cvs = cvs;
 end
