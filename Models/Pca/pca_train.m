@@ -15,13 +15,13 @@ function [model] = pca_train(X, y, param)
 		idx(cvidx) = 1;
 
 		for j = 1 : length(npc)
-			X_train = X_tmp(idx == 0, 1:npc(j));
+			X_train = X(idx == 0, 1:npc(j));
 			y_train = y(idx == 0);
-			X_cv = X_tmp(idx == 1, 1:npc(j));
+			X_cv = X(idx == 1, 1:npc(j));
 			y_cv = y(idx == 1);
 
-			[b, fitinfo] = lasso(X_train, y_train, 'Alpha', params.alpha, 'Standardize', true, ...
-				'CV', cv_num - 1, 'Options', params.opts);
+			[b, fitinfo] = lasso(X_train, y_train, 'Alpha', param.alpha, 'Standardize', true, ...
+				'CV', cv_num - 1, 'Options', param.opts);
 			model = b(:, fitinfo.IndexMinMSE);
 			y_pred = X_cv * model;	% n * length(k)
 
@@ -32,8 +32,8 @@ function [model] = pca_train(X, y, param)
 	res = mean(cvs);
 	[~, idx] = min(res);
 	X = X(:, 1:npc(idx));
-	[b, fitinfo] = lasso(X, y, 'Alpha', params.alpha, 'Standardize', true, ...
-				'CV', cv_num, 'Options', params.opts);
+	[b, fitinfo] = lasso(X, y, 'Alpha', param.alpha, 'Standardize', true, ...
+				'CV', cv_num, 'Options', param.opts);
 	model = struct;
 	model.b = b(:, fitinfo.IndexMinMSE);
 	model.npc = npc(idx);

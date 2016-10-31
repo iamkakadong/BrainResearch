@@ -26,14 +26,14 @@ if (n_parameters == 0)
 	n_parameters = 1;
 end
 
-if isequal(task, 'classification')
-	en_res = load('../Results/elas_net/elas_net_all.mat');
-	en_res = en_res.cv_result_all;
-	idxs = zeros(length(en_res{1}.model), length(en_res));
-	for i = 1:length(en_res)
-		idxs(:, i) = en_res{i}.model~=0;
-	end
-end
+% if isequal(task, 'classification')
+% 	en_res = load('../Results/elas_net/elas_net_all.mat');
+% 	en_res = en_res.cv_result_all;
+% 	idxs = zeros(length(en_res{1}.model), length(en_res));
+% 	for i = 1:length(en_res)
+% 		idxs(:, i) = en_res{i}.model~=0;
+% 	end
+% end
 
 cv_result = cell(n_parameters, n_subjects);
 
