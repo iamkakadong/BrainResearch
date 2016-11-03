@@ -14,15 +14,18 @@ fprintf('loading data...\n')
 %[X, y, event_types, subject_range, final_mask] = load_data(subject_idx, 0);
 load data;
 % X = [event_types; X]';
-X = [ones(n, 1), X];
+% X = [ones(n, 1), X];
+X = X';
 y = event_types' + 1;
 % y = y';	% n * 1
 fprintf('finished loading data\n')
 
-DFmax = [50, 250, 500];
-l_alpha = [0.9, 0.1, 0.01, 0.001];
+DFmax = [50, 250, 500, 1000];
+%l_alpha = [0.9, 0.1, 0.01, 0.001];
+l_alpha = 0.0001;
 params = cell(numel(DFmax) * numel(l_alpha), 1);
 
+idx = 1;
 for i = 1:length(DFmax)
 	for j = 1:length(l_alpha)
 		param = struct;
@@ -32,7 +35,8 @@ for i = 1:length(DFmax)
 		param.cv_num = 26;
 		opts = statset('UseParallel', true);
 		param.opts = opts;
-		params{(i - 1) * length(DFmax) + j} = param;
+		params{idx} = param;
+		idx = idx + 1;
 	end
 end
 
@@ -48,6 +52,6 @@ fprintf('finished cross-validation\n');
 if (length(subset) == 0)
 	filename = '../Results/corr_cl/corr_cl_new.mat';
 else
-	filename = strcat('../Results/corr_cl/corr_cl_', num2str(subset(1)), '_to_', num2str(subset(2)), '.mat');
+	filename = strcat('../Results/corr_cl/corr_cl_ridge', num2str(subset(1)), '_to_', num2str(subset(2)), '.mat');
 end
 save(filename, 'cv_result');

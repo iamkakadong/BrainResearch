@@ -32,6 +32,7 @@ fprintf('finished normalization\n')
 %l_alpha = [0.9, 0.5, 0.1];
 l_alpha = [0.9, 0.1, 0.01, 0.001];
 npcs = [15, 100, 500, 1500];
+%npcs = [1,2];
 % l_alpha = 0.01;
 % DFmax = 3000;
 cv_num = 24;
