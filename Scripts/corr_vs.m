@@ -27,8 +27,9 @@ end
 fprintf('finished normalization\n')
 
 
-DFmax = [50, 250, 500];
-l_alpha = [0.9, 0.1, 0.01, 0.001];
+DFmax = [50, 250, 500, 1000];
+% l_alpha = [0.9, 0.1, 0.01, 0.001];
+l_alpha = 0.0001;
 params = cell(numel(DFmax) * numel(l_alpha), 1);
 
 idx = 1;
