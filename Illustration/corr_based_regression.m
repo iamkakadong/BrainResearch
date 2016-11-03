@@ -10,5 +10,5 @@ end
 plot(scores');
 xlabel('test subject index');
 ylabel('test r^2');
-title('Testing r^2 of correlation-based variable selction + linear regression');
-legend('top-50', 'top-25', 'top-500', 'top-1000');
+title('Testing r^2 of correlation-based variable selction + ridge regression');
+legend('top-50', 'top-250', 'top-500', 'top-1000', 'Location', 'SouthEast');
