@@ -4,6 +4,7 @@ function [model] = corr_lr_train(X, y, param)
 	idx = ord(1:param.DFmax);
 	Xn = X(:, idx);
 	Xn = [ones(size(X, 1), 1), Xn];
+	%size(Xn)
 	model.b = sparse_lr_train(Xn, y, param);
 	model.idx = idx;
 end

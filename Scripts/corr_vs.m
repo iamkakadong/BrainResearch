@@ -31,16 +31,19 @@ DFmax = [50, 250, 500];
 l_alpha = [0.9, 0.1, 0.01, 0.001];
 params = cell(numel(DFmax) * numel(l_alpha), 1);
 
+idx = 1;
 for i = 1:length(DFmax)
 	for j = 1:length(l_alpha)
 		param = struct;
 		param.DFmax = DFmax(i);
 		% param.k = [0, 0.01, 0.1, 1];
 		param.alpha = l_alpha(j);
-		param.cv_num = 26;
+		param.cv_num = 24;
 		opts = statset('UseParallel', true);
 		param.opts = opts;
-		params{(i - 1) * length(DFmax) + j} = param;
+		%params{(i - 1) * length(DFmax) + j} = param;
+		params{idx} = param;
+		idx = idx + 1;
 	end
 end
 

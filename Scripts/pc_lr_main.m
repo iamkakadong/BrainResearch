@@ -16,7 +16,7 @@ fprintf('loading data...\n')
 load pc_results;
 load data;
 
-% X = SCORE(:, 1:15);
+%X = SCORE(:, 1:15);
 X = SCORE;
 [n, p] = size(X);
 X = [ones(n, 1), X];
@@ -74,7 +74,7 @@ end
 if (length(subset) == 0)
 	filename = '../Results/sparse_lr_all.mat';
 else
-	filename = strcat('../Results/pc_lr/15pc_lr_', num2str(subset(1)), '_to_', num2str(subset(2)), '.mat');
+	filename = strcat('../Results/pc_lr/first_pc_lr_', num2str(subset(1)), '_to_', num2str(subset(2)), '.mat');
 end
 save(filename, 'cv_result');
 
