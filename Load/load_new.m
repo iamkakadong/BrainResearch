@@ -1,4 +1,4 @@
-function [data] = load_data(sub_idxs, trial_idxs)
+function [data] = load_data(sub_idxs, trial_idxs, vmask)
 	% data is a cell array of length equal to length of sub_idxs
 	% each cell contains:
 	% 	X: the feature matrix (n * p)
@@ -16,7 +16,7 @@ function [data] = load_data(sub_idxs, trial_idxs)
 		data{ct} = struct;
 		data{ct}.y = res.y;
 		data{ct}.c = res.c;
-		data{ct}.X = load_features(p_dir, idx, trial_idxs);
+		data{ct}.X = load_features(p_dir, idx, trial_idxs, vmask);
 		ct = ct + 1;
 		% y = [y; res.y];
 		% c = [c; res.c];
@@ -38,13 +38,13 @@ function [res] = load_response(p_dir, idx)
 	end
 end
 
-function [res] = load_features(p_dir, idx, trial_idxs)
+function [res, vbool] = load_features(p_dir, idx, trial_idxs, vmask)
 	% res is a n * p matrix with invalid entries removed and features standardized
 	res = [];
 	for i = trial_idxs
 		tmp = load_untouch_nii(strcat(p_dir, num2str(idx, '%04d'), '/single_trial_GLM/beta_', num2str(i, '%04d'), '.nii'));
 		tmp = tmp.img(:);
-		tmp = tmp(~isnan(tmp))';
+		tmp = tmp(vmask ~= 0)';
 		res = [res; tmp];
 	end
 	res = normalize_feature(res);
