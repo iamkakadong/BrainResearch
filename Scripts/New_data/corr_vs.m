@@ -7,7 +7,7 @@ end
 
 config;
 
-data = load_new(train_subs, trial_idxs);
+data = load_new(train_subs, trial_idxs, vmask);
 
 tmp = struct;
 tmp.X = [];
@@ -20,9 +20,9 @@ for i = 1:length(data)
 end
 
 data = tmp;
-subject_range = [56 * 8 : 56 * 8 : 56 * 8 * length(data)];
+subject_range = [56 * 8 : 56 * 8 : 56 * 8 * length(train_subs)];
 
-DFmax = [50, 250, 500, 1000];
+DFmax = [1, 5, 15, 50, 250, 500, 1000];
 % l_alpha = [0.9, 0.1, 0.01, 0.001];
 l_alpha = 0.0001;
 params = cell(numel(DFmax) * numel(l_alpha), 1);
@@ -44,9 +44,9 @@ for i = 1:length(DFmax)
 end
 
 fprintf('performing cross-validation...\n')
-data = struct;
-data.X = X;
-data.y = y;
+%data = struct;
+%data.X = X;
+%data.y = y;
 task = 'regression';
 cv_result = cross_validate(data, subject_range, @cor_train, @cor_pred, params, @my_r2, task, subset);
 fprintf('finished cross-validation\n');

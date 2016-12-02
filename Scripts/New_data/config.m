@@ -1,4 +1,5 @@
 addpath(genpath('~/BrainResearch/'));
+load('vmask.mat');
 
 sub_idxs = [0464  0551  0553  0560  0581  0595  0549 ...
 			0552  0554  0566  0585  0591  0596  0609];
