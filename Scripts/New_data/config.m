@@ -9,5 +9,5 @@ test_subs = sub_idxs(11 : 14);
 trial_idxs = [];
 for i = 1:8
 	tmp = (56 + 6) * (i - 1) + 1;
-	trial_idxs = [trial_idxs, tmp : tmp + 56];
+	trial_idxs = [trial_idxs, tmp : tmp + 55];
 end
