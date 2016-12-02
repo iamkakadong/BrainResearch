@@ -10,11 +10,14 @@ function [data] = load_data(sub_idxs, trial_idxs)
 	% y = [];
 	% c = [];
 
+	ct = 1;
 	for idx = sub_idxs
 		res = load_response(p_dir, idx);
-		data{idx}.y = res.y;
-		data{idx}.c = res.c;
-		data{idx}.X = load_features(p_dir, idx, trial_idxs);
+		data{ct} = struct;
+		data{ct}.y = res.y;
+		data{ct}.c = res.c;
+		data{ct}.X = load_features(p_dir, idx, trial_idxs);
+		ct = ct + 1;
 		% y = [y; res.y];
 		% c = [c; res.c];
 		% X = [X; load_features(p_dir, idx, trial_idxs)];
