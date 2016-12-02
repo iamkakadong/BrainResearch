@@ -1,3 +1,10 @@
+if (~exist('subset'))
+	subset = [];
+elseif (length(subset) ~= 2)
+	fprintf('Incorrect subset size');
+	return
+end
+
 config;
 
 data = load_new(train_subs, trial_idxs);
