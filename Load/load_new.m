@@ -18,6 +18,7 @@ function [data] = load_data(sub_idxs, trial_idxs)
 		% y = [y; res.y];
 		% c = [c; res.c];
 		% X = [X; load_features(p_dir, idx, trial_idxs)];
+		fprintf('finished loading subject: %04d\n', idx);
 	end
 end
 
