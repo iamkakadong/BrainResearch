@@ -1,9 +1,10 @@
-function [data] = load_data(sub_idxs, trial_idxs, vmask)
+function [data] = load_new(sub_idxs, trial_idxs, vmask)
 	% data is a cell array of length equal to length of sub_idxs
 	% each cell contains:
 	% 	X: the feature matrix (n * p)
 	%	y: the response vector (n * 1)
 	%	c: the condition matrix (n * d)
+    %   vmask: a mask for valid entry indicies
 	p_dir = '/data2/tren/NewData/';
 	data = cell(length(sub_idxs), 1);
 	% X = [];
@@ -36,6 +37,7 @@ function [res] = load_response(p_dir, idx)
 		res.y = [res.y; tmp(:, 1)];
 		res.c = [res.c; tmp(:, 2:end)];
 	end
+	res.y = normalize_feature(res.y);
 end
 
 function [res, vbool] = load_features(p_dir, idx, trial_idxs, vmask)
