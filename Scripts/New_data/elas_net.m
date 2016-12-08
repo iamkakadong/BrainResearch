@@ -26,6 +26,7 @@ data.X = [data.c, data.X];
 subject_range = [56 * 8 : 56 * 8 : 56 * 8 * length(train_subs)];
 
 %DFmax = [1, 5, 15, 50, 250, 500, 1000];
+DFmax = 10000;
 l_alpha = [0.9, 0.1, 0.01, 0.001];
 %l_alpha = 0.0001;
 params = cell(numel(DFmax) * numel(l_alpha), 1);
@@ -51,13 +52,13 @@ fprintf('performing cross-validation...\n')
 %data.X = X;
 %data.y = y;
 task = 'regression';
-cv_result = cross_validate(data, subject_range, @cor_train, @cor_pred, params, @my_r2, task, subset);
+cv_result = cross_validate(data, subject_range, @elas_net_train, @elas_net_pred, params, @my_r2, task, subset);
 fprintf('finished cross-validation\n');
 
 
 if (length(subset) == 0)
-	filename = '../New_results/elas_net/elas_net_all.mat';
+	filename = '../../New_results/elas_net/elas_net_all.mat';
 else
-	filename = strcat('../New_results/elas_net/elas_net_', num2str(subset(1)), '_to_', num2str(subset(2)), '.mat');
+	filename = strcat('../../New_results/elas_net/elas_net_', num2str(subset(1)), '_to_', num2str(subset(2)), '.mat');
 end
 save(filename, 'cv_result');
