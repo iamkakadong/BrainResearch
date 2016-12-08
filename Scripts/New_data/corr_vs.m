@@ -6,8 +6,9 @@ elseif (length(subset) ~= 2)
 end
 
 config;
+thresh = 3;
 
-data = load_new(train_subs, trial_idxs, vmask);
+data = load_new(train_subs, trial_idxs, thresh, vmask);
 
 tmp = struct;
 tmp.X = [];
