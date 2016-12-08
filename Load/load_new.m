@@ -1,27 +1,26 @@
-function [data] = load_new(sub_idxs, trial_idxs, vmask)
+function [data] = load_new(sub_idxs, trial_idxs, thresh, vmask)
+	% Input:
+	%	thresh: cut-off z-score threshold for judging an observation as outlier
+    %   vmask: a mask for valid entry indicies
 	% data is a cell array of length equal to length of sub_idxs
 	% each cell contains:
 	% 	X: the feature matrix (n * p)
 	%	y: the response vector (n * 1)
 	%	c: the condition matrix (n * d)
-    %   vmask: a mask for valid entry indicies
 	p_dir = '/data2/tren/NewData/';
 	data = cell(length(sub_idxs), 1);
-	% X = [];
-	% y = [];
-	% c = [];
 
 	ct = 1;
 	for idx = sub_idxs
 		res = load_response(p_dir, idx);
+		valid_idxs = abs(res.y) <= thresh;
 		data{ct} = struct;
-		data{ct}.y = res.y;
-		data{ct}.c = res.c;
+		data{ct}.y = normalize_feature(res.y(valid_idxs));
+		data{ct}.c = res.c(valid_idxs);
 		data{ct}.X = load_features(p_dir, idx, trial_idxs, vmask);
+		data{ct}.X = data{ct}.X(valid_idxs, :);
+		data{ct}.l = sum(valid_idxs);
 		ct = ct + 1;
-		% y = [y; res.y];
-		% c = [c; res.c];
-		% X = [X; load_features(p_dir, idx, trial_idxs)];
 		fprintf('finished loading subject: %04d\n', idx);
 	end
 end
