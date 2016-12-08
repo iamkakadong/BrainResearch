@@ -25,7 +25,7 @@ function [data] = load_new(sub_idxs, trial_idxs, thresh, vmask)
 	end
 end
 
-function [res] = load_response(p_dir, idx)
+function [res] = load_response(p_dir, idx, trial_idxs)
 	% res.y is n * 1
 	% res.c is n * d, where d is the number of conditions
 	res = struct;
@@ -36,7 +36,7 @@ function [res] = load_response(p_dir, idx)
 		res.y = [res.y; tmp(:, 1)];
 		res.c = [res.c; tmp(:, 2:end)];
 	end
-	res.y = normalize_feature(res.y);
+	res.y = normalize_feature(res.y(trial_idxs));
 end
 
 function [res, vbool] = load_features(p_dir, idx, trial_idxs, vmask)
