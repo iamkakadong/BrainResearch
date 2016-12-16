@@ -30,10 +30,13 @@ def gen_idx(sub_idx, to_exclude):
 
 if __name__ == '__main__':
     pc_num = int(sys.argv[1])
-    fileout = sys.argv[2]
-    pc = scipy.io.loadmat('pc_results.mat')
-    tmp = scipy.io.loadmat('y.mat')
-    cond = np.array(scipy.io.loadmat('condition.mat')['event_types']).astype(float)[0]
+    # kernel_smooth = float(sys.argv[2])
+    # b = float(sys.argv[3])
+    l1_ratio = float(sys.argv[2])
+    fileout = sys.argv[3]
+    pc = scipy.io.loadmat('pc_results_nooutlier.mat')
+    tmp = scipy.io.loadmat('y_nooutlier.mat')
+    cond = np.array(scipy.io.loadmat('condition_nooutlier.mat')['event_types']).astype(float)[0]
     sub_idx = tmp['subject_range'].tolist()
     sub_idx = [i for sl in sub_idx for i in sl]
     y = np.array(tmp['y']).astype(float)[0]
@@ -44,8 +47,8 @@ if __name__ == '__main__':
     scaler = preprocessing.StandardScaler()
     pc_std = scaler.fit_transform(pc_red)
 
-    #elas_net = linear_model.ElasticNetCV(l1_ratio=0.01, cv=26, verbose=1, n_jobs=2, fit_intercept=True, normalize=True, copy_X=True)
-    ridge = linear_model.RidgeCV(cv=27, fit_intercept=True, normalize=True)
+    model = linear_model.ElasticNetCV(l1_ratio=l1_ratio, cv=27, verbose=1, n_jobs=2, fit_intercept=True, normalize=True, copy_X=True)
+    #model = linear_model.RidgeCV(cv=27, fit_intercept=True, normalize=True)
     #gbr = ensemble.GradientBoostingRegressor
 
     prev_idx = 0
@@ -59,14 +62,30 @@ if __name__ == '__main__':
         y_test = y_std[prev_idx:sub_idx[i]]
         x_train = pc_red[gen_idx(sub_idx, i), :]
         y_train = y_std[gen_idx(sub_idx, i)]
-        weight = np.array(kmm.kmm(x_train, x_test, kf=kernel.rbf, kfargs=(64, ), B=50)['x']).flatten()
-        ridge.fit(x_train, y_train, weight)
-        train_r2.append(ridge.score(x_train, y_train))
-        train_r2_weighted.append(ridge.score(x_train, y_train, weight))
-        test_r2.append(ridge.score(x_test, y_test))
-        weights.append(weight)
-        coefs.append(ridge.coef_)
-        print 'iteration training: %0.4f, testing: %0.4f' % (train_r2[-1], test_r2[-1])
+        assert (len(y_test) == sub_idx[i] - prev_idx)
+        assert (len(y_train) == len(gen_idx(sub_idx, i)))
+        #x_test = x_test[np.abs(y_test) <= 4, :]
+        #y_test = y_test[np.abs(y_test) <= 4]
+        #x_train = x_train[np.abs(y_train) <= 4, :]
+        #y_train = y_train[np.abs(y_train) <= 4]
+        #assert (len(y_test) == sub_idx[i] - prev_idx)
+        #assert (len(y_train) == len(gen_idx(sub_idx, i)))
+        #weight = np.array(kmm.kmm(x_train, x_test, kf=kernel.rbf, kfargs=(kernel_smooth, ), B=b)['x']).flatten()
+        #weight = np.array(kmm.kmm(x_train, pc_red, kf=kernel.rbf, kfargs=(kernel_smooth, ), B=b)['x']).flatten()
+        #print 'max weight %0.5f' % (max(weight))
+        #print 'min weight %0.5f' % (min(weight))
+        #print 'mean weight %0.5f' % (weight.mean())
+        #print 'median weight %0.5f' % (np.median(weight))
+        #print 'std weight %0.4f' % (np.std(weight))
+        #model.fit(x_train, y_train, weight)
+        model.fit(x_train, y_train)
+        train_r2.append(model.score(x_train, y_train))
+        #train_r2_weighted.append(model.score(x_train, y_train, weight))
+        test_r2.append(model.score(x_test, y_test))
+        #weights.append(weight)
+        coefs.append(model.coef_)
+        prev_idx = sub_idx[i]
+        print 'iteration %d training: %0.4f, testing: %0.4f' % (i, train_r2[-1], test_r2[-1])
 
     results = dict()
     results['train_r2'] = train_r2

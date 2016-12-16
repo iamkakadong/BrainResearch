@@ -28,7 +28,7 @@ function [model] = ridge_train(X, y, params)
 
 	models = ridge(y, X, k);
 	m = mean(cvs, 1);
-	[~, etr] = min(m);
+	[~, etr] = max(m);
 	model = models(:, etr);
 
 end

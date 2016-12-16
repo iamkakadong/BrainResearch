@@ -7,7 +7,7 @@
 % legend('mean', '95% confidence interval');
 
 load('../Results/regression_all.mat');
-boxplot(scores_all, 'colorgroup', [1,1,2,2,2,2,3,3,3], 'boxstyle', 'filled', 'medianstyle', 'target', 'whisker', 0.7193, 'labels', labels)
+boxplot(scores_all, 'colorgroup', [1,1,1,1,2,2,2,2,3,3,3,3], 'boxstyle', 'filled', 'medianstyle', 'target', 'whisker', 0.7193, 'labels', labels)
 box_vars = findall(gca,'Tag','Box');
-hLegend = legend(box_vars([9,4,1]), {'Correlation-vs','Elastic Net','PCA + Elastic Net'});
-title('Test r^2 of different models')
+hLegend = legend(box_vars([9,5,1]), {'Correlation-vs','Elastic Net','PCA + Elastic Net'});
+title('Test r^2 of regression')
