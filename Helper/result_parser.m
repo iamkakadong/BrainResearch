@@ -63,5 +63,5 @@ save(strcat(coeff_file, '.mat'), 'coeff_img');
 save(strcat(ct_file, '.mat'), 'ct_img');
 
 %% Convert to nii file
-mat2nii(strcat(coeff_file, '.mat'), '../wmeanepi_Stroop_iPAT1.88PMU.nii');
-mat2nii(strcat(ct_file, '.mat'), '../wmeanepi_Stroop_iPAT1.88PMU.nii');
+mat2nii(strcat(coeff_file, '.mat'), '../../wmeanepi_Stroop_iPAT1.88PMU.nii');
+mat2nii(strcat(ct_file, '.mat'), '../../wmeanepi_Stroop_iPAT1.88PMU.nii');

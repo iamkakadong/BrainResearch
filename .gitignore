@@ -3,3 +3,5 @@ data.mat
 *.pbs.*
 Illustration/Figures/
 *n_elas*
+*.mat
+*.nii

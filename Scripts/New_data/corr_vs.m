@@ -16,7 +16,7 @@ tmp.y = [];
 subject_range = [];
 
 for i = 1:length(data)
-	tmp2 = [normalize_feature(data{i}.c), data{i}.X];
+	tmp2 = [data{i}.c, data{i}.X];
 	tmp.X = [tmp.X; tmp2];
 	tmp.y = [tmp.y; data{i}.y];
 	subject_range = [subject_range, length(data{i}.y)];

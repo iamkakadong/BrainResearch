@@ -74,7 +74,7 @@ end
 if (length(subset) == 0)
 	filename = '../Results/sparse_lr_all.mat';
 else
-	filename = strcat('../Results/pc_lr/80first_pc_lr_', num2str(subset(1)), '_to_', num2str(subset(2)), '.mat');
+	filename = strcat('../Results/pc_lr/80_first_pc_lr_', num2str(subset(1)), '_to_', num2str(subset(2)), '.mat');
 end
 save(filename, 'cv_result');
 
