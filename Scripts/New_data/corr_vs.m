@@ -25,9 +25,9 @@ end
 data = tmp;
 subject_range = cumsum(subject_range);
 
-DFmax = [1, 5, 15, 50, 250, 500, 1000];
+DFmax = [1, 5, 15, 50, 250, 500, 1000, 3000];
 % l_alpha = [0.9, 0.1, 0.01, 0.001];
-l_alpha = 0.0001;
+l_alpha = [0.0001, 0.01, 0.1, 0.9];
 params = cell(numel(DFmax) * numel(l_alpha), 1);
 
 idx = 1;
@@ -37,7 +37,7 @@ for i = 1:length(DFmax)
 		param.DFmax = DFmax(i);
 		% param.k = [0, 0.01, 0.1, 1];
 		param.alpha = l_alpha(j);
-		param.cv_num = 10;
+		param.cv_num = 24;
 		opts = statset('UseParallel', true);
 		param.opts = opts;
 		%params{(i - 1) * length(DFmax) + j} = param;
@@ -56,8 +56,8 @@ fprintf('finished cross-validation\n');
 
 
 if (length(subset) == 0)
-	filename = '../New_results/abs_corr_vs/corr_vs_all_nnew.mat';
+	filename = '/home/tren/BrainResearch/New_results/abs_corr_vs/corr_vs_all_nnew.mat';
 else
-	filename = strcat('../New_results/abs_corr_vs/abscorr_vs_', num2str(subset(1)), '_to_', num2str(subset(2)), '.mat');
+	filename = strcat('/home/tren/BrainResearch/New_results/abs_corr_vs/abscorr_vs_', num2str(subset(1)), '_to_', num2str(subset(2)), '.mat');
 end
 save(filename, 'cv_result');

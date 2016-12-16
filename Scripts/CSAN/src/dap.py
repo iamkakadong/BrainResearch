@@ -33,14 +33,14 @@ if __name__ == '__main__':
     # b = float(sys.argv[3])
     l1_ratio = float(sys.argv[2])
     fileout = sys.argv[3]
-    pc = scipy.io.loadmat('pc_results_nooutlier.mat')
-    tmp = scipy.io.loadmat('y_nooutlier.mat')
-    cond = np.array(scipy.io.loadmat('condition_nooutlier.mat')['event_types']).astype(float)[0]
+    pc = scipy.io.loadmat('pca_data.mat')
+    tmp = scipy.io.loadmat('y.mat')
+    cond = np.array(scipy.io.loadmat('conditions.mat')['conditions']).astype(float)[0]
     sub_idx = tmp['subject_range'].tolist()
     sub_idx = [i for sl in sub_idx for i in sl]
     y = np.array(tmp['y']).astype(float)[0]
     y_std = standardize(y, sub_idx)
-    score = np.array(pc['SCORE'])
+    score = np.array(pc['score'])
     pc_red = np.c_[cond.T, score[:, 1:pc_num]]
 
     scaler = preprocessing.StandardScaler()

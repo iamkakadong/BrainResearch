@@ -14,9 +14,10 @@ function [data] = load_new(sub_idxs, trial_idxs, thresh, vmask)
 	for idx = sub_idxs
 		res = load_response(p_dir, idx);
 		valid_idxs = abs(res.y) <= thresh;
+		valid_idxs = valid_idxs(1:length(trial_idxs));	% CAREFUL! This is only a hack used to experiment with preprocessing. Definitely REMOVE this in actual use.
 		data{ct} = struct;
 		data{ct}.y = normalize_feature(res.y(valid_idxs));
-		data{ct}.c = res.c(valid_idxs);
+		data{ct}.c = res.c(valid_idxs, :);
 		data{ct}.X = load_features(p_dir, idx, trial_idxs, vmask);
 		data{ct}.X = data{ct}.X(valid_idxs, :);
 		data{ct}.l = sum(valid_idxs);
@@ -46,6 +47,9 @@ function [res, vbool] = load_features(p_dir, idx, trial_idxs, vmask)
 		tmp = load_untouch_nii(strcat(p_dir, num2str(idx, '%04d'), '/single_trial_GLM/beta_', num2str(i, '%04d'), '.nii'));
 		tmp = tmp.img(:);
 		tmp = tmp(vmask ~= 0)';
+		if (any(isnan(tmp(:))))
+			fprintf('nan encountered in loading subject: %04d. Terminating...\n', idx);
+		end
 		res = [res; tmp];
 	end
 	res = normalize_feature(res);
