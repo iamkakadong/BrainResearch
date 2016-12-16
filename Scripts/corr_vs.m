@@ -17,7 +17,6 @@ X = [event_types; X]';
 y = y';	% n * 1
 fprintf('finished loading data\n')
 
-
 fprintf('normalizing data...\n')
 last_idx = 0;
 for i = 1:length(subject_idx)
@@ -27,7 +26,7 @@ end
 fprintf('finished normalization\n')
 
 
-DFmax = [50, 250, 500, 1000];
+DFmax = [1, 10, 25, 50, 100, 250, 500, 1000];
 % l_alpha = [0.9, 0.1, 0.01, 0.001];
 l_alpha = 0.0001;
 params = cell(numel(DFmax) * numel(l_alpha), 1);
@@ -60,6 +59,6 @@ fprintf('finished cross-validation\n');
 if (length(subset) == 0)
 	filename = '../Results/abs_corr_vs/corr_vs_all_nnew.mat';
 else
-	filename = strcat('../Results/abs_corr_vs/abscorr_vs_', num2str(subset(1)), '_to_', num2str(subset(2)), '.mat');
+	filename = strcat('../Results/abs_corr_vs/abscorr_vs_lin', num2str(subset(1)), '_to_', num2str(subset(2)), '.mat');
 end
 save(filename, 'cv_result');
