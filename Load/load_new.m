@@ -14,7 +14,7 @@ function [data] = load_new(sub_idxs, trial_idxs, thresh, vmask)
 	for idx = sub_idxs
 		res = load_response(p_dir, idx);
 		valid_idxs = abs(res.y) <= thresh;
-		valid_idxs = valid_idxs(1:length(trial_idxs));	% CAREFUL! This is only a hack used to experiment with preprocessing. Definitely REMOVE this in actual use.
+		% valid_idxs = valid_idxs(1:length(trial_idxs));	% CAREFUL! This is only a hack used to experiment with preprocessing. Definitely REMOVE this in actual use.
 		data{ct} = struct;
 		data{ct}.y = normalize_feature(res.y(valid_idxs));
 		data{ct}.c = res.c(valid_idxs, :);
