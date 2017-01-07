@@ -33,17 +33,18 @@ if __name__ == '__main__':
     # b = float(sys.argv[3])
     l1_ratio = float(sys.argv[2])
     fileout = sys.argv[3]
-    pc = scipy.io.loadmat('pc_results.mat')
-    tmp = scipy.io.loadmat('response.mat')
-    cond = np.array(tmp['c']).astype(float)
-    y = np.array(tmp['y']).astype(float).flatten()
-    #cond = np.array(scipy.io.loadmat('condition_nooutlier.mat')['event_types']).astype(float)[0]
+    pc = scipy.io.loadmat('pca_compact.mat')
+    tmp = scipy.io.loadmat('y.mat')
+    cond = np.array(scipy.io.loadmat('conditions.mat')['conditions']).astype(float)
+    # cond = np.array(tmp['c']).astype(float)
+    # y = np.array(tmp['y']).astype(float).flatten()
+    
     sub_idx = tmp['subject_range'].tolist()
     sub_idx = [i for sl in sub_idx for i in sl]
-    y = np.array(tmp['y']).astype(float)[0]
+    y = np.array(tmp['y']).astype(float).flatten()
     y_std = standardize(y, sub_idx)
-    score = np.array(pc['SCORE'])
-    pc_red = np.c_[cond.T, score[:, 1:pc_num]]
+    score = np.array(pc['score']).astype(float)
+    pc_red = np.c_[cond, score[:, 1:pc_num]]
 
     scaler = preprocessing.StandardScaler()
     pc_std = scaler.fit_transform(pc_red)
@@ -56,9 +57,11 @@ if __name__ == '__main__':
     train_r2 = list()
     train_r2_weighted = list()
     test_r2 = list()
+    pred = list()
+    truth = list()
     weights = list()
     coefs = list()
-    for i in range(28):
+    for i in range(15):
         x_test = pc_red[prev_idx:sub_idx[i], :]
         y_test = y_std[prev_idx:sub_idx[i]]
         x_train = pc_red[gen_idx(sub_idx, i), :]
@@ -80,6 +83,8 @@ if __name__ == '__main__':
         #print 'std weight %0.4f' % (np.std(weight))
         #model.fit(x_train, y_train, weight)
         model.fit(x_train, y_train)
+        pred.append(model.predict(x_test))
+        truth.append(y_test)
         train_r2.append(model.score(x_train, y_train))
         #train_r2_weighted.append(model.score(x_train, y_train, weight))
         test_r2.append(model.score(x_test, y_test))
@@ -94,4 +99,6 @@ if __name__ == '__main__':
     results['test_r2'] = test_r2
     results['weights'] = weights
     results['coefs'] = coefs
+    results['pred'] = pred
+    results['truth'] = truth
     scipy.io.savemat(fileout, results)
