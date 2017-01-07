@@ -34,7 +34,8 @@ function [res] = load_response(p_dir, idx)
 	res.c = [];
 	for i = 1:8
 		tmp = importdata(strcat(p_dir, num2str(idx, '%04d'), '/DangerZone_run', num2str(i, '%01d'), '/', num2str(idx, '%0.4d'), '_run', num2str(i, '%01d'), '_bias.txt'));
-		res.y = [res.y; tmp(:, 1)];
+		% res.y = [res.y; tmp(:, 1)];
+        res.y = [res.y - mean(res.y); tmp(:, 1)];   % Remove mean from each block to account for mean shift
 		res.c = [res.c; tmp(:, 2:end)];
 	end
 	res.y = normalize_feature(res.y);
