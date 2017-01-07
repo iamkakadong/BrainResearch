@@ -6,29 +6,27 @@ elseif (length(subset) ~= 2)
 end
 
 config;
+thresh = 3;
 
-data = load_new(train_subs, trial_idxs, vmask);
-load('data.mat');
-data = raw_data;
-data.X = [data.c, data.X];
+data = load_new(train_subs, trial_idxs, thresh, vmask);
 
-%tmp = struct;
-%tmp.X = [];
-%tmp.y = [];
-%
-%for i = 1:length(data)
-%	tmp2 = [normalize_feature(data{i}.c), data{i}.X];
-%	tmp.X = [tmp.X; tmp2];
-%	tmp.y = [tmp.y; data{i}.y];
-%end
-%
-%data = tmp;
-subject_range = [56 * 8 : 56 * 8 : 56 * 8 * length(train_subs)];
+tmp = struct;
+tmp.X = [];
+tmp.y = [];
+subject_range = [];
 
-%DFmax = [1, 5, 15, 50, 250, 500, 1000];
+for i = 1:length(data)
+	tmp2 = [data{i}.c, data{i}.X];
+	tmp.X = [tmp.X; tmp2];
+	tmp.y = [tmp.y; data{i}.y];
+	subject_range = [subject_range, length(data{i}.y)];
+end
+
+data = tmp;
+subject_range = cumsum(subject_range);
+
 DFmax = 10000;
-l_alpha = [0.9, 0.1, 0.01, 0.001];
-%l_alpha = 0.0001;
+l_alpha = [0.001, 0.01, 0.1, 0.9];
 params = cell(numel(DFmax) * numel(l_alpha), 1);
 
 idx = 1;
@@ -38,7 +36,7 @@ for i = 1:length(DFmax)
 		param.DFmax = DFmax(i);
 		% param.k = [0, 0.01, 0.1, 1];
 		param.alpha = l_alpha(j);
-		param.cv_num = 10;
+		param.cv_num = 14;
 		opts = statset('UseParallel', true);
 		param.opts = opts;
 		%params{(i - 1) * length(DFmax) + j} = param;
@@ -57,8 +55,8 @@ fprintf('finished cross-validation\n');
 
 
 if (length(subset) == 0)
-	filename = '../../New_results/elas_net/elas_net_all.mat';
+	filename = '/home/tren/BrainResearch/New_results/elas_net/elas_net_all_nnew.mat';
 else
-	filename = strcat('../../New_results/elas_net/elas_net_', num2str(subset(1)), '_to_', num2str(subset(2)), '.mat');
+	filename = strcat('/home/tren/BrainResearch/New_results/elas_net/elas_net_', num2str(subset(1)), '_to_', num2str(subset(2)), '.mat');
 end
 save(filename, 'cv_result');
